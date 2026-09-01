@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday, Jessica</title>
+<meta name="description" content="A birthday letter for Jessica Tanji">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:wght@600;700&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#140B21;
+    --night-deep:#0A0512;
+    --card:#F7ECDD;
+    --wine:#D9678F;
+    --wine-deep:#9C4468;
+    --rose:#F3A9C4;
+    --gold:#E7C07E;
+    --ink:#F5EAE0;
+    --ink-soft:#B79EB0;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--night);
+    color:var(--ink);
+    font-family:'Lora',serif;
+    overflow-x:hidden;
+  }
+
+  /* ---------- stars + floating hearts ---------- */
+  #heartsBg{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.8), transparent 60%),
+      radial-gradient(1px 1px at 32% 62%, rgba(255,255,255,.6), transparent 60%),
+      radial-gradient(1.5px 1.5px at 52% 28%, rgba(255,255,255,.9), transparent 60%),
+      radial-gradient(1px 1px at 68% 78%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(1px 1px at 82% 15%, rgba(255,255,255,.7), transparent 60%),
+      radial-gradient(1.5px 1.5px at 92% 55%, rgba(255,255,255,.85), transparent 60%),
+      radial-gradient(1px 1px at 6% 85%, rgba(255,255,255,.6), transparent 60%),
+      radial-gradient(1px 1px at 42% 92%, rgba(255,255,255,.5), transparent 60%);
+    background-repeat:repeat;
+    background-size:340px 340px;
+  }
+  .star{
+    position:absolute;
+    border-radius:50%;
+    will-change:opacity, transform;
+    animation:twinkle ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:.2; transform:scale(.75); }
+    50%{ opacity:1; transform:scale(1.2); }
+  }
+  .heart{
+    position:absolute;
+    bottom:-40px;
+    color:var(--rose);
+    opacity:.35;
+    will-change:transform;
+    animation:floatUp linear infinite;
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); }
+    50%{ transform:translateY(-55vh) translateX(var(--drift,20px)) rotate(12deg); }
+    100%{ transform:translateY(-115vh) translateX(0) rotate(-8deg); opacity:0; }
+  }
+
+  /* ---------- landing / envelope ---------- */
+  .landing{
+    position:relative;
+    z-index:1;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem 1.5rem;
+    transition:opacity .6s ease;
+  }
+
+  .for-line{
+    font-family:'Lora',serif;
+    font-style:italic;
+    font-size:1rem;
+    color:var(--ink-soft);
+    margin:0 0 .5rem;
+    letter-spacing:.02em;
+  }
+
+  .name{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:clamp(2.1rem, 8vw, 3.4rem);
+    color:var(--gold);
+    text-shadow:0 0 26px rgba(231,192,126,.35);
+    margin:0 0 2.75rem;
+    line-height:1.1;
+  }
+
+  .envelope{
+    background:none;
+    border:none;
+    padding:0;
+    cursor:pointer;
+    width:clamp(190px, 55vw, 260px);
+    perspective:700px;
+  }
+  .envelope:focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:6px;
+    border-radius:6px;
+  }
+  .envelope svg{ width:100%; height:auto; display:block; }
+
+  .env-flap{
+    transform-box:fill-box;
+    transform-origin:50% 0%;
+    transition:transform .6s cubic-bezier(.4,0,.2,1), opacity .6s ease;
+  }
+  .env-seal{
+    transform-box:fill-box;
+    transform-origin:50% 50%;
+    filter:drop-shadow(0 0 8px rgba(231,192,126,.55));
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .env-paper{
+    transform-box:fill-box;
+    transform-origin:50% 100%;
+    transform:translateY(46px);
+    opacity:0;
+    transition:transform .6s ease .25s, opacity .6s ease .25s;
+  }
+  .envelope.open .env-flap{
+    transform:scaleY(.08) rotate(-5deg) translateY(-4px);
+    opacity:.25;
+  }
+  .envelope.open .env-seal{
+    opacity:0;
+    transform:scale(.4);
+  }
+  .envelope.open .env-paper{
+    transform:translateY(-14px);
+    opacity:1;
+  }
+  .envelope:not(.open):hover .env-seal{ transform:scale(1.06); }
+
+  .hint{
+    margin-top:1.75rem;
+    font-size:.85rem;
+    color:var(--ink-soft);
+    animation:pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:.55; }
+    50%{ opacity:1; }
+  }
+
+  /* ---------- letter page ---------- */
+  .letter-page{
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    margin:0 auto;
+    padding:5rem 1.5rem 7rem;
+    opacity:0;
+    transition:opacity 1s ease;
+  }
+  .letter-page.visible{ opacity:1; }
+
+  .letter-header{
+    text-align:center;
+    margin-bottom:3.5rem;
+  }
+  .letter-header svg{ width:64px; height:auto; color:var(--rose); margin-bottom:1.25rem; }
+  .letter-header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:clamp(1.6rem, 5.5vw, 2.3rem);
+    color:var(--gold);
+    text-shadow:0 0 22px rgba(231,192,126,.3);
+    margin:0;
+    line-height:1.3;
+  }
+
+  .letter-body p{
+    font-family:'Lora',serif;
+    font-size:1.125rem;
+    line-height:1.85;
+    color:var(--ink);
+    margin:0 0 1.4rem;
+    max-width:60ch;
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .letter-body p.in-view{ opacity:1; transform:translateY(0); }
+
+  .letter-body p:first-of-type::first-letter{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:3.1rem;
+    float:left;
+    line-height:.78;
+    padding:.06em .1em 0 0;
+    color:var(--gold);
+  }
+
+  .letter-body p.emphasis{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:1.55rem;
+    color:var(--wine);
+    text-align:center;
+    margin:2.75rem auto;
+  }
+
+  .signature{
+    margin-top:3.5rem;
+    text-align:center;
+  }
+  .signature p{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .signature p.in-view{ opacity:1; transform:translateY(0); }
+  .signature .script{
+    font-family:'Parisienne',cursive;
+    font-size:clamp(2.1rem, 8vw, 2.9rem);
+    color:var(--gold);
+    text-shadow:0 0 22px rgba(231,192,126,.3);
+    display:block;
+    margin-top:.5rem;
+  }
+  .signature .glyph{
+    margin-top:1.5rem;
+    color:var(--rose);
+    font-size:1.1rem;
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .heart{ animation:none; display:none; }
+    .star{ animation:none; opacity:.6; }
+    .hint{ animation:none; }
+    .letter-body p, .signature p{
+      opacity:1 !important;
+      transform:none !important;
+      transition:none !important;
+    }
+    .env-flap, .env-seal, .env-paper{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div id="heartsBg"></div>
+
+<section class="landing" id="landing">
+  <p class="for-line">a little something for</p>
+  <h1 class="name">Jessica Tanji</h1>
+
+  <button class="envelope" id="envelope" aria-label="Open your birthday letter">
+    <svg viewBox="0 0 240 170" xmlns="http://www.w3.org/2000/svg">
+      <rect x="10" y="40" width="220" height="120" rx="10" style="fill:var(--wine-deep)"/>
+      <path class="env-flap" d="M10,40 L120,112 L230,40 Z" style="fill:var(--wine)"/>
+      <rect class="env-paper" x="42" y="66" width="156" height="86" rx="5" style="fill:var(--card)"/>
+      <path d="M10,160 L120,96 L230,160 Z" style="fill:var(--night-deep)"/>
+      <g class="env-seal">
+        <circle cx="120" cy="82" r="17" style="fill:var(--gold)"/>
+        <text x="120" y="88" text-anchor="middle" font-size="17" style="fill:var(--night-deep)">&#10084;</text>
+      </g>
+    </svg>
+  </button>
+
+  <p class="hint">tap the envelope</p>
+</section>
+
+<section class="letter-page" id="letterPage">
+  <div class="letter-header">
+    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 40C24 40 6 28.5 6 16.8C6 10.8 10.7 6 16.4 6C19.7 6 22.6 7.7 24 10.3C25.4 7.7 28.3 6 31.6 6C37.3 6 42 10.8 42 16.8C42 28.5 24 40 24 40Z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+    <h1>Happy birthday, Jessica Tanji! 🎉🎂</h1>
+  </div>
+
+  <div class="letter-body">
+    <p>I just wanted to take some time to properly wish you a very happy birthday and tell you how much I appreciate you. I could honestly just say “happy birthday” and leave it there, but I feel like your birthday deserves more than just a few words, so here I am writing this ridiculously long message instead 😭.</p>
+
+    <p>I hope you know that today isn’t just another ordinary day. It’s a day to celebrate you, everything you’ve been through, everything you’ve accomplished, all the memories you’ve made, and all the people whose lives you’ve somehow become a part of. Another year has passed, and even though birthdays can sometimes feel like just another date on the calendar, I think they’re also a really good reminder of how much can happen in a single year and how much a person can grow without even realizing it.</p>
+
+    <p>So before anything else, I genuinely hope you have an amazing birthday.</p>
+
+    <p>I hope you wake up today feeling happy and appreciated. I hope you get to spend time with people who make you smile. I hope you get to eat your favorite food, enjoy your favorite things, laugh about random stuff, take a ridiculous amount of pictures, receive some nice messages, and just have a day that feels special.</p>
+
+    <p>And I hope you don’t spend the whole day worrying about whether everything is perfect.</p>
+
+    <p>It doesn’t have to be perfect.</p>
+
+    <p>Sometimes the best birthdays aren’t the ones where everything goes exactly according to plan. Sometimes they’re the ones where something completely random happens and ends up becoming the funniest memory. Sometimes it’s a random conversation that you didn’t expect to have. Sometimes it’s laughing over something incredibly stupid. Sometimes it’s simply being around people you enjoy and realizing that you’re having a genuinely good time.</p>
+
+    <p>Those are the moments I hope you get today.</p>
+
+    <p>I also want to say that I appreciate you for being you.</p>
+
+    <p>There are so many people in the world, and every person has their own personality, their own way of thinking, their own experiences, their own sense of humor, their own little habits, and their own story. And that’s what makes every person different. You don’t need to be exactly like anyone else, and you don’t need to compare yourself to anyone else.</p>
+
+    <p class="emphasis">You’re Jessica.</p>
+
+    <p class="emphasis">And that’s already enough.</p>
+
+    <p>I hope you continue being yourself even when other people don’t completely understand you. I hope you continue doing the things that make you happy. I hope you continue surrounding yourself with people who genuinely care about you and want to see you doing well. And I hope you always remember that the people who truly appreciate you will appreciate you for who you actually are, not for some version of you that you feel like you have to become.</p>
+
+    <p>You’ve probably changed a lot over the years, even if you don’t notice it yourself.</p>
+
+    <p>You’ve learned things.</p>
+    <p>You’ve experienced things.</p>
+    <p>You’ve met different people.</p>
+    <p>You’ve made memories.</p>
+    <p>You’ve probably made mistakes too.</p>
+    <p>And that’s completely okay.</p>
+
+    <p>Nobody gets through life without making mistakes. Nobody has everything figured out. Nobody knows exactly what they’re doing all the time. Growing up is basically just constantly learning something new, realizing you were wrong about something, figuring things out, making another mistake, learning from that mistake, and somehow continuing forward anyway 😭.</p>
+
+    <p>So don’t be too hard on yourself when things don’t go the way you wanted.</p>
+
+    <p>One bad day doesn’t make your whole life bad.</p>
+    <p>One mistake doesn’t define you.</p>
+    <p>One failure doesn’t mean you’re a failure.</p>
+    <p>One awkward moment doesn’t mean everyone remembers it forever.</p>
+    <p>And one difficult period doesn’t mean things will always be difficult.</p>
+
+    <p>There are still so many things ahead of you that you haven’t experienced yet.</p>
+
+    <p>There are people you haven’t met.</p>
+    <p>Places you haven’t visited.</p>
+    <p>Things you haven’t learned.</p>
+    <p>Memories you haven’t made.</p>
+    <p>Jokes you haven’t laughed at.</p>
+    <p>Songs you haven’t discovered.</p>
+    <p>Foods you haven’t tried.</p>
+    <p>Random conversations you haven’t had.</p>
+    <p>And countless moments that you don’t even know are going to become important to you someday.</p>
+
+    <p class="emphasis">That’s one of the coolest things about life.</p>
+
+    <p>You never really know which ordinary day is going to turn into a memory you’ll remember for years.</p>
+
+    <p>So for this next year of your life, I hope you get plenty of those moments.</p>
+
+    <p>I hope you have days where you laugh so hard that you can’t even remember what started the laughter.</p>
+    <p>I hope you have conversations that somehow last way longer than they were supposed to.</p>
+    <p>I hope you experience things that make you genuinely excited.</p>
+    <p>I hope you discover new interests.</p>
+    <p>I hope you become more confident in yourself.</p>
+    <p>I hope you accomplish things that you’re proud of.</p>
+    <p>I hope you have opportunities that you never expected.</p>
+    <p>I hope you get to try things you’ve always wanted to try.</p>
+    <p>And I hope you never feel like you’re falling behind just because someone else seems to be moving faster.</p>
+
+    <p>Everyone has their own pace.</p>
+    <p>Everyone’s story is different.</p>
+    <p>You don’t have to live according to somebody else’s timeline.</p>
+    <p>Your life isn’t a competition.</p>
+    <p>You don’t need to have everything figured out immediately.</p>
+    <p>It’s okay to take your time.</p>
+    <p>It’s okay to change your mind.</p>
+    <p>It’s okay to not know what you want yet.</p>
+    <p>It’s okay to make mistakes.</p>
+    <p>It’s okay to start over.</p>
+    <p>And it’s okay to simply enjoy where you are right now.</p>
+
+    <p>I hope this new year of your life brings you more happiness than the last one.</p>
+
+    <p>I hope it brings you new experiences, new memories, new opportunities, and hopefully a lot less unnecessary stress 😭.</p>
+
+    <p>I hope you have more reasons to smile.</p>
+    <p>More reasons to laugh.</p>
+    <p>More reasons to be proud of yourself.</p>
+    <p>More moments where you stop and think, “Wow, I’m actually really happy right now.”</p>
+
+    <p>And whenever life gets difficult, I hope you remember that difficult moments don’t last forever.</p>
+
+    <p>There will always be better days waiting ahead.</p>
+
+    <p>Sometimes you just have to get through the bad ones before you can appreciate the good ones.</p>
+
+    <p>And when you do have good days, don’t be afraid to enjoy them.</p>
+
+    <p>Take the pictures.</p>
+    <p>Save the messages.</p>
+    <p>Remember the jokes.</p>
+    <p>Keep the memories.</p>
+    <p>Appreciate the people around you.</p>
+
+    <p>Because someday, you’ll look back and realize that those little moments were actually some of the best parts of your life.</p>
+
+    <p>I also hope that you continue meeting people who treat you well.</p>
+
+    <p>People who listen when you talk.</p>
+    <p>People who respect you.</p>
+    <p>People who support you.</p>
+    <p>People who can make you laugh.</p>
+    <p>People who aren’t afraid to celebrate your successes.</p>
+    <p>People who can be there when things aren’t going perfectly.</p>
+    <p>And people who make you feel comfortable enough to be completely yourself.</p>
+
+    <p>Good people are worth appreciating, and I hope you have plenty of them around you.</p>
+
+    <p>And speaking of appreciation, I genuinely appreciate having you as someone I can talk to and share moments with. Even if we’ve had completely random conversations, stupid jokes, confusing situations, or moments where neither of us knew what was happening, those little things still become memories.</p>
+
+    <p>Sometimes you don’t realize how meaningful someone’s presence is until you think about all the little moments you’ve shared.</p>
+
+    <p>The random conversations.</p>
+    <p>The inside jokes.</p>
+    <p>The stupid arguments.</p>
+    <p>The moments where you’re both laughing for absolutely no reason.</p>
+    <p>The times where one person says something completely normal and somehow it becomes funny.</p>
+    <p>The moments that weren’t planned at all.</p>
+
+    <p>Those are the things that make friendships and connections feel real.</p>
+
+    <p>And I hope there are many more moments like that ahead.</p>
+
+    <p>More memories.</p>
+    <p>More laughs.</p>
+    <p>More random conversations.</p>
+    <p>More stupid jokes.</p>
+    <p>More stories to tell.</p>
+    <p>More things to look back on and laugh about.</p>
+
+    <p>So today, I hope you allow yourself to feel appreciated.</p>
+
+    <p>Not because it’s your birthday and people are expected to say nice things, but because you genuinely deserve to know that people care about you.</p>
+
+    <p>You matter to the people around you.</p>
+    <p>Your presence matters.</p>
+    <p>Your personality matters.</p>
+    <p>Your memories matter.</p>
+    <p>Your experiences matter.</p>
+
+    <p>And the things you do, even the small things, can mean more to people than you realize.</p>
+
+    <p>Sometimes you can make someone’s day without even knowing it.</p>
+    <p>Sometimes a simple conversation can make someone feel better.</p>
+    <p>Sometimes a joke can make someone laugh when they really needed it.</p>
+    <p>Sometimes just being there can mean something.</p>
+
+    <p>You might not always notice the effect you have on people, but that doesn’t mean you don’t have one.</p>
+
+    <p>So please don’t underestimate yourself.</p>
+
+    <p>And please don’t forget to appreciate yourself too.</p>
+
+    <p>You’ve made it through every difficult day you’ve faced so far.</p>
+
+    <p>That’s something worth remembering.</p>
+
+    <p>Every time you thought you couldn’t handle something, you eventually got through it.</p>
+    <p>Every time something went wrong, you found a way forward.</p>
+    <p>Every year you’ve lived has brought you to where you are now.</p>
+
+    <p>And there’s still so much ahead.</p>
+
+    <p>So here’s to another year.</p>
+
+    <p>Another year of learning.</p>
+    <p>Another year of growing.</p>
+    <p>Another year of laughing.</p>
+    <p>Another year of making memories.</p>
+    <p>Another year of random decisions.</p>
+    <p>Another year of probably making some questionable choices 😭.</p>
+    <p>Another year of discovering new things.</p>
+    <p>Another year of meeting new people.</p>
+    <p>Another year of becoming a little more experienced.</p>
+    <p>Another year of stories.</p>
+    <p>Another year of adventures.</p>
+    <p>Another year of opportunities.</p>
+
+    <p>And hopefully, another year filled with plenty of happiness.</p>
+
+    <p>I hope you achieve the things you’ve been working toward.</p>
+    <p>I hope you reach goals that you’ve been hoping to reach.</p>
+    <p>I hope you find new goals when you accomplish the old ones.</p>
+    <p>I hope you’re proud of your progress, even when it feels slow.</p>
+
+    <p>And I hope you remember that progress doesn’t always have to be something huge.</p>
+
+    <p>Sometimes progress is simply getting through another day.</p>
+    <p>Sometimes it’s learning something new.</p>
+    <p>Sometimes it’s becoming better at something.</p>
+    <p>Sometimes it’s realizing what you don’t want.</p>
+    <p>Sometimes it’s becoming more comfortable with yourself.</p>
+    <p>Sometimes it’s simply choosing to keep going.</p>
+
+    <p>All of those things count.</p>
+
+    <p>So don’t overlook the small victories.</p>
+    <p>Celebrate them.</p>
+    <p>You deserve to.</p>
+
+    <p>And today especially, celebrate yourself.</p>
+
+    <p>Eat the cake.</p>
+    <p>Enjoy the food.</p>
+    <p>Take the pictures.</p>
+    <p>Laugh with your friends.</p>
+    <p>Open your presents.</p>
+    <p>Read the birthday messages.</p>
+    <p>And enjoy being the birthday person for once 😭.</p>
+
+    <p>You only get one birthday each year, so you might as well make the most of it.</p>
+
+    <p>I hope today gives you memories that stay with you for a long time.</p>
+
+    <p>I hope you receive messages that make you smile.</p>
+    <p>I hope someone surprises you.</p>
+    <p>I hope you get something you’ve wanted.</p>
+    <p>I hope you hear something nice that you weren’t expecting.</p>
+    <p>I hope you laugh at least a hundred times.</p>
+
+    <p>And if the day doesn’t go exactly as planned, that’s okay too.</p>
+
+    <p>A birthday doesn’t need to be perfect to be meaningful.</p>
+
+    <p>Sometimes just having the people you care about around you is enough.</p>
+
+    <p>And if nobody has told you yet today:</p>
+
+    <p>Happy birthday, Jessica.</p>
+
+    <p>Seriously.</p>
+
+    <p>Happy birthday.</p>
+
+    <p>I’m wishing you a year filled with happiness, good memories, exciting experiences, good health, personal growth, success in whatever you decide to pursue, and most importantly, plenty of reasons to smile.</p>
+
+    <p>I hope you have the courage to chase the things you want.</p>
+    <p>I hope you have the patience to wait for the things that take time.</p>
+    <p>I hope you have the strength to get through the difficult things.</p>
+    <p>I hope you have the wisdom to learn from your experiences.</p>
+    <p>I hope you have the confidence to be yourself.</p>
+
+    <p>And I hope you have the people around you who remind you that you don’t have to do everything alone.</p>
+
+    <p>May this next chapter of your life be full of unexpected happiness.</p>
+    <p>May you find new reasons to be excited about the future.</p>
+    <p>May you look back at this year someday and realize just how many amazing things happened.</p>
+    <p>May you make memories that you’ll still laugh about years from now.</p>
+    <p>May you experience things that change your perspective for the better.</p>
+    <p>May you accomplish things you once thought were impossible.</p>
+    <p>May you become someone you’re proud to be.</p>
+
+    <p>And most importantly, may you never forget to enjoy the journey while you’re becoming that person.</p>
+
+    <p>Because life isn’t only about reaching the destination.</p>
+
+    <p>It’s also about everything that happens along the way.</p>
+
+    <p>The people you meet.</p>
+    <p>The places you go.</p>
+    <p>The conversations you have.</p>
+    <p>The mistakes you make.</p>
+    <p>The lessons you learn.</p>
+    <p>The random moments.</p>
+    <p>The unexpected opportunities.</p>
+    <p>The laughter.</p>
+    <p>The sadness.</p>
+    <p>The excitement.</p>
+    <p>The calm moments.</p>
+    <p>The chaotic moments.</p>
+
+    <p>All of it becomes part of your story.</p>
+
+    <p>And this birthday is just another page in that story.</p>
+
+    <p>There’s still so much left to write.</p>
+
+    <p class="emphasis">So here’s to Jessica Tanji.</p>
+
+    <p>Here’s to another year of life.</p>
+    <p>Another year of memories.</p>
+    <p>Another year of laughter.</p>
+    <p>Another year of growth.</p>
+    <p>Another year of experiences.</p>
+    <p>Another year of being completely yourself.</p>
+
+    <p>And another year of becoming an even stronger, wiser, happier, and more confident version of yourself.</p>
+
+    <p>Thank you for being you.</p>
+    <p>Thank you for the memories.</p>
+    <p>Thank you for the laughs.</p>
+    <p>Thank you for all the little moments that might seem ordinary but are actually the things that make life memorable.</p>
+
+    <p>And thank you for simply being someone worth celebrating today.</p>
+
+    <p>I hope your birthday is absolutely amazing.</p>
+
+    <p>I hope your day is filled with happiness from beginning to end.</p>
+    <p>I hope you smile so much your face gets tired.</p>
+    <p>I hope you laugh until you can’t breathe.</p>
+    <p>I hope your cake is delicious.</p>
+    <p>I hope your presents are great.</p>
+    <p>I hope your photos turn out amazing.</p>
+    <p>I hope your favorite people remember your birthday.</p>
+    <p>I hope you get to do something you genuinely enjoy.</p>
+
+    <p>And I hope when the day finally ends, you can look back and say:</p>
+
+    <p>“That was a really good birthday.”</p>
+
+    <p>So once again...</p>
+
+    <p>Happy birthday, Jessica Tanji. 🎂🎉</p>
+
+    <p>I genuinely hope this next chapter of your life is one of the best ones yet.</p>
+
+    <p>Keep being yourself.</p>
+    <p>Keep growing.</p>
+    <p>Keep laughing.</p>
+    <p>Keep making memories.</p>
+    <p>Keep doing the things that make you happy.</p>
+
+    <p>Don’t let temporary problems convince you that your future won’t be good.</p>
+    <p>Don’t let other people’s opinions decide your worth.</p>
+    <p>Don’t compare your journey to someone else’s.</p>
+
+    <p>And don’t forget how far you’ve already come.</p>
+
+    <p>There’s so much waiting for you in the future, and I hope you get to experience more happiness, more laughter, more adventures, more success, and more unforgettable moments than you can imagine right now.</p>
+
+    <p>Have an absolutely wonderful birthday, Jessica.</p>
+
+    <p>You deserve a day full of happiness, a year full of good memories, and a future full of amazing possibilities.</p>
+
+    <p>Once again, happy birthday!!! 🎉🎂🥳</p>
+
+    <p>I hope you enjoy every single moment of your day.</p>
+
+    <p>And yes, I know this message is ridiculously long.</p>
+
+    <p>But hey...</p>
+
+    <p>It’s your birthday.</p>
+
+    <p>You’re worth the extra words.</p>
+  </div>
+
+  <div class="signature">
+    <p>Happy birthday,<span class="script">Jessica Tanji</span></p>
+    <p class="glyph">&#10084;</p>
+  </div>
+</section>
+
+<script>
+  // twinkling stars
+  (function(){
+    var host = document.getElementById('heartsBg');
+    var count = window.matchMedia('(max-width: 600px)').matches ? 26 : 42;
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement('div');
+      s.className = 'star';
+      var size = 1 + Math.random() * 2.2;
+      var gold = Math.random() < 0.35;
+      s.style.left = (Math.random() * 100) + 'vw';
+      s.style.top = (Math.random() * 100) + 'vh';
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.background = gold ? 'var(--gold)' : '#FFFFFF';
+      s.style.boxShadow = '0 0 ' + (size * 2) + 'px ' + (gold ? 'rgba(231,192,126,.8)' : 'rgba(255,255,255,.7)');
+      s.style.animationDuration = (2.5 + Math.random() * 3.5) + 's';
+      s.style.animationDelay = (Math.random() * 5) + 's';
+      host.appendChild(s);
+    }
+  })();
+
+  // floating hearts
+  (function(){
+    var host = document.getElementById('heartsBg');
+    var count = window.matchMedia('(max-width: 600px)').matches ? 7 : 11;
+    for (var i = 0; i < count; i++) {
+      var h = document.createElement('div');
+      h.className = 'heart';
+      h.innerHTML = '&#10084;';
+      var size = 10 + Math.random() * 16;
+      h.style.left = (Math.random() * 100) + 'vw';
+      h.style.fontSize = size + 'px';
+      h.style.animationDuration = (9 + Math.random() * 9) + 's';
+      h.style.animationDelay = (Math.random() * 10) + 's';
+      h.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+      host.appendChild(h);
+    }
+  })();
+
+  // envelope open interaction
+  (function(){
+    var envelope = document.getElementById('envelope');
+    var landing = document.getElementById('landing');
+    var letterPage = document.getElementById('letterPage');
+    var opened = false;
+
+    envelope.addEventListener('click', function(){
+      if (opened) return;
+      opened = true;
+      envelope.classList.add('open');
+
+      setTimeout(function(){
+        letterPage.classList.add('visible');
+        landing.style.opacity = '0.35';
+        letterPage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 850);
+    });
+  })();
+
+  // scroll reveal for paragraphs
+  (function(){
+    var targets = document.querySelectorAll('.letter-body p, .signature p');
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(function(p){ p.classList.add('in-view'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(function(p){ observer.observe(p); });
+  })();
+</script>
+
+</body>
+</html>
