@@ -3,540 +3,492 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#F7F6F3" id="themeColor">
+<meta name="theme-color" content="#1D3FA8">
 <title>Happy Birthday, Jessica</title>
 <meta name="description" content="A birthday letter for Jessica Tanji">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 40C24 40 6 28.5 6 16.8C6 10.8 10.7 6 16.4 6C19.7 6 22.6 7.7 24 10.3C25.4 7.7 28.3 6 31.6 6C37.3 6 42 10.8 42 16.8C42 28.5 24 40 24 40Z' fill='%239F2F2D'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' fill='%231D3FA8'/%3E%3Ccircle cx='24' cy='24' r='15' fill='%23111'/%3E%3Ccircle cx='24' cy='24' r='5' fill='%23E8ECFA'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');</script>
 <style>
   :root{
-    --canvas:#F7F6F3;
-    --ink:#2F3437;
-    --ink-strong:#1B1A18;
-    --muted:#6B6A66;
-    --line:rgba(27,26,24,.12);
-    --pale:#FDEBEC;
-    --accent:#9F2F2D;
-    --night:#1B1A18;
-    --night-ink:#F7F6F3;
-    --night-accent:#F2B6B2;
+    --sleeve:#1D3FA8;
+    --sleeve-deep:#17338A;
+    --on-sleeve:#FFFFFF;
+    --on-sleeve-soft:#C9D3F2;
+    --column:#F3F4F1;
+    --ink:#1B1F2A;
+    --muted:#59606E;
+    --line:rgba(27,31,42,.14);
+    --tint:#E8ECFA;
 
-    --ui-ink:var(--ink-strong);
-    --ui-muted:var(--muted);
-    --ui-line:var(--line);
-
-    --display:'Instrument Serif','Newsreader',Georgia,serif;
-    --text:'Newsreader',Georgia,serif;
-    --ui:'Geist','Helvetica Neue',system-ui,sans-serif;
-    --mono:'Geist Mono',ui-monospace,monospace;
+    --display:'Bricolage Grotesque','Helvetica Neue',system-ui,sans-serif;
+    --read:'Source Serif 4',Georgia,serif;
 
     --ease:cubic-bezier(.16,1,.3,1);
-    --gutter:clamp(1.25rem,5vw,4rem);
-    --offset:clamp(0rem,20vw,16rem);
-  }
-  body.dark{
-    --ui-ink:var(--night-ink);
-    --ui-muted:#A9A59D;
-    --ui-line:rgba(247,246,243,.18);
+    --rail:clamp(19rem,27vw,25rem);
   }
 
   *{ box-sizing:border-box; }
   [hidden]{ display:none !important; }
-
-  html{
-    scroll-behavior:smooth;
-    scroll-snap-type:y proximity;
-    scrollbar-width:thin;
-    scrollbar-color:#CFCCC5 transparent;
-    -webkit-text-size-adjust:100%;
-  }
-  body{
-    margin:0;
-    background:var(--canvas);
-    color:var(--ink);
-    font-family:var(--text);
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-  ::selection{ background:var(--accent); color:#FFFFFF; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; scrollbar-width:thin; scrollbar-color:#B9BDC7 transparent; }
+  body{ margin:0; background:var(--column); color:var(--ink); font-family:var(--read); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  body.on-landing{ background:var(--sleeve); }
+  ::selection{ background:var(--sleeve); color:#FFFFFF; }
   ::-webkit-scrollbar{ width:10px; }
-  ::-webkit-scrollbar-thumb{ background:#CFCCC5; border-radius:6px; border:3px solid var(--canvas); }
-  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:4px; }
-
-  .ambient{
-    position:fixed; inset:0; pointer-events:none;
-    background:radial-gradient(55% 40% at 92% -8%, rgba(253,235,236,.9), transparent 70%);
-  }
+  ::-webkit-scrollbar-thumb{ background:#B9BDC7; border-radius:6px; border:3px solid var(--column); }
+  :focus-visible{ outline:2px solid var(--sleeve); outline-offset:3px; border-radius:3px; }
+  .on-sleeve :focus-visible, .landing :focus-visible{ outline-color:#FFFFFF; }
   .icon-defs{ position:absolute; width:0; height:0; overflow:hidden; }
-  .ico-heart{ width:1em; height:1em; fill:currentColor; }
 
-  /* ---------- fixed chrome ---------- */
-  .progress{
-    z-index:5;
-    position:fixed; top:0; left:0; right:0; height:2px;
-    background:var(--accent);
-    transform-origin:0 50%; transform:scaleX(0);
-    pointer-events:none; opacity:0;
-    transition:opacity .4s ease;
-  }
-  body.reading .progress{ opacity:1; }
-
-  .counter{
-    z-index:5;
-    position:fixed; left:var(--gutter); bottom:1.25rem;
-    font-family:var(--mono); font-size:.8rem; letter-spacing:.04em;
-    color:var(--ui-muted);
-    font-variant-numeric:tabular-nums;
-    opacity:0; pointer-events:none;
-    transition:opacity .4s ease, color .4s ease;
-  }
-  .counter b{ font-weight:400; color:var(--ui-ink); }
-  body.reading .counter{ opacity:1; }
-
-  .nav{
-    z-index:5;
-    position:fixed; right:var(--gutter); bottom:1rem;
-    display:flex; gap:.5rem;
-    opacity:0; pointer-events:none;
-    transition:opacity .4s ease;
-  }
-  body.reading .nav{ opacity:1; pointer-events:auto; }
-
-  .btn-icon{
-    width:44px; height:44px; border-radius:6px;
-    background:transparent; border:1px solid var(--ui-line);
-    color:var(--ui-ink);
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-    transition:background .2s ease, border-color .4s ease, color .4s ease, transform .2s var(--ease);
-  }
-  .btn-icon:hover{ background:rgba(127,127,127,.12); }
-  .btn-icon:active{ transform:scale(.96); }
-  .btn-icon:disabled{ opacity:.35; cursor:default; }
-  .btn-icon svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
-
-  .music-toggle{
-    z-index:5;
-    position:fixed; top:1rem; right:var(--gutter);
-    opacity:0; pointer-events:none;
-  }
-  .music-toggle.visible{ opacity:1; pointer-events:auto; }
-  .music-toggle .slash{ display:none; }
-  .music-toggle.muted{ color:var(--ui-muted); }
-  .music-toggle.muted .waves{ display:none; }
-  .music-toggle.muted .slash{ display:block; }
-
+  /* ---------- buttons ---------- */
   .cta{
-    appearance:none; border:0;
+    appearance:none; border:0; cursor:pointer;
     background:#111111; color:#FFFFFF;
-    font-family:var(--ui); font-weight:500; font-size:.95rem; letter-spacing:.005em;
-    padding:.95rem 1.5rem; min-height:44px; border-radius:6px; cursor:pointer;
+    font-family:var(--display); font-weight:600; font-size:1rem; letter-spacing:.005em;
+    padding:.9rem 1.5rem; min-height:48px; border-radius:6px;
     transition:background .2s ease, transform .2s var(--ease);
   }
-  .cta:hover{ background:#333333; }
+  .cta:hover{ background:#2B2B2B; }
   .cta:active{ transform:scale(.98); }
-  .cta[aria-disabled="true"]{ background:#555350; cursor:default; }
-  .cta.ghost{ background:transparent; color:var(--ink-strong); border:1px solid var(--line); }
-  .cta.ghost:hover{ background:rgba(27,26,24,.05); }
+  .cta[aria-disabled="true"]{ background:#0B0B0B; opacity:.7; cursor:default; }
+  .cta.quiet{ background:transparent; color:var(--sleeve); border:1px solid var(--sleeve); }
+  .cta.quiet:hover{ background:var(--tint); }
 
-  /* ---------- landing ---------- */
+  /* ---------- landing: the sleeve ---------- */
   html:not(.js) .landing{ display:none; }
   .landing{
-    position:relative;
     min-height:100dvh;
-    display:grid;
-    grid-template-columns:minmax(0,7fr) minmax(0,5fr);
-    align-items:end;
-    gap:clamp(2rem,6vw,6rem);
-    max-width:1400px; margin:0 auto;
-    padding:clamp(2rem,8vh,5rem) var(--gutter);
-    transition:opacity .45s var(--ease), transform .45s var(--ease);
+    background:var(--sleeve); color:var(--on-sleeve);
+    display:grid; grid-template-columns:minmax(0,6fr) minmax(0,5fr);
+    align-items:center; gap:clamp(2rem,6vw,6rem);
+    padding:clamp(2rem,7vh,5rem) clamp(1.25rem,6vw,6rem);
+    overflow:hidden;
+    transition:opacity .5s var(--ease);
   }
-  .landing.leaving{ opacity:0; transform:translateY(-8px); }
+  .landing.leaving{ opacity:0; }
   .landing h1{
-    font-family:var(--display); font-weight:400;
-    font-size:clamp(3.2rem,10vw,6rem); line-height:.98; letter-spacing:-.03em;
-    color:var(--ink-strong); margin:0 0 1.5rem; text-wrap:balance;
+    margin:0 0 1.25rem; font-family:var(--display); font-weight:700;
+    font-size:clamp(3rem,1rem + 7vw,6rem); line-height:.98; letter-spacing:-.035em;
+    text-wrap:balance; max-width:9em;
   }
-  .landing p{
-    font-size:clamp(1.1rem,1.02rem + .4vw,1.3rem); line-height:1.6;
-    color:var(--muted); margin:0 0 2.25rem; max-width:30ch;
-  }
-  .landing-art{ display:flex; justify-content:flex-end; align-self:center; }
-  .envelope{
-    background:none; border:0; padding:0; cursor:pointer;
-    width:min(100%,400px);
-    filter:drop-shadow(0 20px 24px rgba(70,50,35,.07));
+  .landing p{ margin:0 0 2rem; max-width:28ch; font-size:clamp(1.1rem,1rem + .4vw,1.3rem); line-height:1.55; color:var(--on-sleeve-soft); }
+  .landing .cta{ background:#111111; }
+
+  .sleeve-wrap{ display:flex; justify-content:center; }
+  .sleeve{
+    position:relative; width:min(100%,420px); aspect-ratio:1; padding:0; border:0; cursor:pointer;
+    background:var(--column); border-radius:4px;
     transition:transform .5s var(--ease);
   }
-  .envelope:not(.open):hover{ transform:translateY(-3px) rotate(-1deg); }
-  .envelope svg{ width:100%; height:auto; display:block; overflow:visible; }
-  .env-flap{ transform-box:fill-box; transform-origin:50% 0%; transition:transform .7s var(--ease), opacity .7s ease; }
-  .env-seal{ transform-box:fill-box; transform-origin:50% 50%; transition:opacity .3s ease, transform .4s var(--ease); }
-  .env-paper{ transform-box:fill-box; transform-origin:50% 100%; transform:translateY(44px); opacity:0; transition:transform .8s var(--ease) .25s, opacity .5s ease .25s; }
-  .envelope.open .env-flap{ transform:scaleY(.06); opacity:.3; }
-  .envelope.open .env-seal{ opacity:0; transform:scale(.4); }
-  .envelope.open .env-paper{ transform:translateY(-34px); opacity:1; }
-  .envelope:not(.open):hover .env-seal{ transform:scale(1.08); }
+  .sleeve:not(.open):hover{ transform:rotate(-1.2deg) translateY(-3px); }
+  .sleeve-disc{
+    position:absolute; top:6%; left:30%; width:88%; height:88%;
+    transition:transform 1s var(--ease);
+  }
+  .sleeve::after{ /* sleeve front covers the left part of the disc */
+    content:""; position:absolute; inset:0; background:var(--column); border-radius:4px;
+    clip-path:inset(0 0 0 0);
+  }
+  .sleeve-face{
+    position:absolute; inset:0; z-index:2; border-radius:4px;
+    background:var(--column);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:8%; text-align:left; color:var(--ink);
+    transition:transform 1s var(--ease);
+  }
+  .sleeve-face b{ font-family:var(--display); font-weight:700; font-size:clamp(1.4rem,3.4vw,2rem); letter-spacing:-.02em; line-height:1.05; }
+  .sleeve-face span{ font-family:var(--display); font-size:.85rem; color:var(--muted); }
+  .sleeve::after{ display:none; }
+  .sleeve.open .sleeve-disc{ transform:translateX(34%) rotate(40deg); }
+  .sleeve.open .sleeve-face{ transform:translateX(-6%); }
 
-  .js .landing-copy > *, .js .landing-art{ opacity:0; transform:translateY(12px); animation:rise .8s var(--ease) forwards; }
+  .js .landing-copy > *, .js .sleeve-wrap{ opacity:0; transform:translateY(12px); animation:rise .8s var(--ease) forwards; }
   .js .landing-copy h1{ animation-delay:.05s; }
   .js .landing-copy p{ animation-delay:.18s; }
   .js .landing-copy .cta{ animation-delay:.3s; }
-  .js .landing-art{ animation-delay:.2s; }
+  .js .sleeve-wrap{ animation-delay:.2s; }
   @keyframes rise{ to{ opacity:1; transform:none; } }
 
   @media (max-width:760px){
-    .landing{ grid-template-columns:1fr; align-items:center; gap:2.5rem; }
-    .landing-art{ justify-content:flex-start; order:-1; }
-    .envelope{ width:min(100%,300px); }
+    .landing{ grid-template-columns:1fr; align-content:center; }
+    .sleeve-wrap{ order:-1; justify-content:flex-start; }
+    .sleeve{ width:min(78%,300px); }
   }
 
-  /* ---------- letter as slides ---------- */
-  .js .letter:not(.shown){ display:none; }
-  .letter{ opacity:0; transition:opacity .9s ease; }
-  .letter.visible{ opacity:1; }
+  /* ---------- reader ---------- */
+  .js .reader:not(.shown){ display:none; }
+  .reader{ display:grid; grid-template-columns:var(--rail) minmax(0,1fr); min-height:100dvh; opacity:0; transition:opacity .8s ease; }
+  .reader.visible{ opacity:1; }
 
-  .slide{
-    position:relative;
-    min-height:100dvh;
-    display:grid; align-items:center;
-    padding:clamp(5rem,11vh,7rem) var(--gutter) clamp(5rem,11vh,7rem);
-    scroll-snap-align:start;
-    background:var(--canvas);
+  .rail{
+    position:sticky; top:0; height:100dvh; align-self:start;
+    background:var(--sleeve); color:var(--on-sleeve);
+    display:flex; flex-direction:column; gap:1.5rem;
+    padding:clamp(1.5rem,4vh,2.5rem) clamp(1.25rem,2.4vw,2rem);
+    overflow:hidden;
   }
-  .slide[data-dark]{ background:var(--night); color:var(--night-ink); }
-  .inner{
-    width:100%; max-width:1400px; margin:0 auto;
-    padding-left:var(--offset);
+  .rail-top{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+  .disc-mini{ width:56px; height:56px; flex:none; }
+  .disc-mini svg, .sleeve-disc svg{ width:100%; height:100%; display:block; }
+  .spin .disc-mini svg{ animation:spin 5s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .music-toggle{
+    width:44px; height:44px; border-radius:6px; flex:none;
+    background:transparent; border:1px solid rgba(255,255,255,.35); color:#FFFFFF;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:background .2s ease, transform .2s var(--ease);
+  }
+  .music-toggle:hover{ background:rgba(255,255,255,.12); }
+  .music-toggle:active{ transform:scale(.96); }
+  .music-toggle svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  .music-toggle .slash{ display:none; }
+  .music-toggle.muted .waves{ display:none; }
+  .music-toggle.muted .slash{ display:block; }
+
+  .rail-title{ margin:0; font-family:var(--display); font-weight:700; font-size:1.5rem; line-height:1.08; letter-spacing:-.02em; }
+  .rail-sub{ margin:.35rem 0 0; font-family:var(--display); font-size:.9rem; color:var(--on-sleeve-soft); }
+
+  .tracks{ list-style:none; margin:0; padding:0; overflow-y:auto; flex:1; min-height:0; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.3) transparent; }
+  .tracks li{ border-top:1px solid rgba(255,255,255,.18); }
+  .tracks li:last-child{ border-bottom:1px solid rgba(255,255,255,.18); }
+  .tracks a{
+    display:grid; grid-template-columns:2.2rem 1fr; align-items:baseline; gap:.25rem;
+    padding:.7rem .25rem; min-height:44px;
+    font-family:var(--display); font-size:.98rem; line-height:1.25;
+    color:var(--on-sleeve-soft); text-decoration:none;
+    font-variant-numeric:tabular-nums;
+    transition:color .25s ease, background .25s ease;
+  }
+  .tracks a:hover{ color:#FFFFFF; }
+  .tracks a[aria-current="true"]{ color:#FFFFFF; font-weight:600; background:var(--sleeve-deep); }
+  .tracks a span{ opacity:.7; }
+
+  .menu-btn{ display:none; }
+
+  /* ---------- the column ---------- */
+  .column{ padding:clamp(3rem,9vh,6rem) clamp(1.25rem,5vw,5rem) clamp(5rem,12vh,9rem); }
+  .column > *{ max-width:36rem; }
+  .column .wide{ max-width:44rem; }
+
+  .progress{
+    position:fixed; top:0; left:var(--rail); right:0; height:3px; background:var(--sleeve);
+    transform-origin:0 50%; transform:scaleX(0); pointer-events:none; z-index:4; display:none;
+  }
+  @supports (animation-timeline: scroll()){
+    .reading .progress{ display:block; animation:grow linear both; animation-timeline:scroll(root block); }
+    @keyframes grow{ to{ transform:scaleX(1); } }
   }
 
-  /* stagger reveal; default is visible without JS */
-  .js .slide .inner > *{
-    opacity:0; transform:translateY(14px);
-    transition:opacity .8s var(--ease), transform .8s var(--ease);
-    transition-delay:calc(var(--i,0) * 90ms);
+  .opener{ margin:0 0 clamp(3rem,8vh,5rem); }
+  .opener h1{
+    margin:0; font-family:var(--display); font-weight:700;
+    font-size:clamp(2.6rem,1rem + 4.6vw,5rem); line-height:1; letter-spacing:-.035em; text-wrap:balance; color:var(--sleeve);
   }
-  .js .slide.seen .inner > *{ opacity:1; transform:none; }
+  .opener h1:focus{ outline:none; }
+  .opener p{ margin:1.25rem 0 0; font-family:var(--display); color:var(--muted); font-size:1rem; }
+  kbd{ font-family:var(--display); font-size:.8rem; padding:.1rem .4rem; border:1px solid var(--line); border-radius:4px; background:#FFFFFF; }
 
-  .prose p{
-    margin:0; max-width:34em;
-    font-size:clamp(1.3rem,1rem + 1.15vw,1.85rem);
-    line-height:1.5; color:var(--ink-strong);
-    text-wrap:pretty;
+  .track{ margin:0 0 clamp(3rem,8vh,5.5rem); scroll-margin-top:2rem; }
+  .track h2{
+    margin:0 0 1.6rem; padding-top:2.25rem; border-top:1px solid var(--line);
+    font-family:var(--display); font-weight:600; font-size:clamp(1.35rem,1.1rem + .8vw,1.75rem);
+    line-height:1.15; letter-spacing:-.015em; color:var(--sleeve);
   }
+  .track h2:focus{ outline:none; }
 
-  .lines p{
-    margin:0 0 .55em; max-width:30em;
-    font-size:clamp(1.35rem,1rem + 1.5vw,2.15rem);
-    line-height:1.3; letter-spacing:-.005em;
-    color:var(--ink-strong);
-    text-wrap:balance;
-  }
-  .lines p:last-child{ margin-bottom:0; }
+  .track p{ margin:0 0 1.35em; font-size:clamp(1.1875rem,1.08rem + .3vw,1.3125rem); line-height:1.7; text-wrap:pretty; }
+  .stanza{ margin:0 0 1.9em; }
+  .stanza p{ margin:0 0 .4em; }
+  .stanza p:last-child{ margin-bottom:0; }
 
-  .pull .inner{ padding-left:clamp(0rem,8vw,8rem); }
+  .pull{ margin:3rem 0; padding:0; }
   .pull p{
-    margin:0;
-    font-family:var(--display); font-weight:400;
-    font-size:clamp(2.6rem,1rem + 6.4vw,6rem);
-    line-height:1.02; letter-spacing:-.03em;
-    color:var(--night-ink); text-wrap:balance; max-width:14em;
+    margin:0; font-family:var(--display); font-weight:600;
+    font-size:clamp(2rem,1.1rem + 3vw,3.25rem); line-height:1.06; letter-spacing:-.025em; color:var(--sleeve); text-wrap:balance;
   }
-  .pull p + p{ font-style:italic; color:var(--night-accent); margin-top:.15em; }
+  .pull p + p{ color:var(--ink); }
 
-  .opening .inner > *{ max-width:none; }
-  .opening h1{
-    margin:0;
-    font-family:var(--display); font-weight:400;
-    font-size:clamp(3rem,1rem + 8vw,6rem);
-    line-height:1; letter-spacing:-.03em;
-    color:var(--ink-strong); text-wrap:balance; max-width:11em;
-  }
-  .opening h1:focus{ outline:none; }
-  .opening .ico-heart{ display:block; font-size:1.75rem; color:var(--accent); margin-bottom:1.75rem; }
-  .opening .hint{
-    margin:2.5rem 0 0; font-family:var(--ui); font-size:.9rem; color:var(--muted);
-  }
-  kbd{
-    font-family:var(--mono); font-size:.78rem;
-    padding:.12rem .4rem; border:1px solid var(--line); border-radius:4px; background:#FFFFFF;
-  }
+  .js .rv{ opacity:0; transform:translateY(10px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+  .js .rv.in{ opacity:1; transform:none; }
 
-  .closing .signoff{ margin:0; font-style:italic; color:var(--muted); font-size:clamp(1.3rem,1rem + 1.15vw,1.85rem); }
-  .closing .name{
-    display:block; margin:.1em 0 0;
-    font-family:var(--display); font-style:normal; font-weight:400;
-    font-size:clamp(3rem,1rem + 8vw,6rem);
-    line-height:1; letter-spacing:-.03em; color:var(--ink-strong);
-  }
-  .closing .ico-heart{ display:block; font-size:1.5rem; color:var(--accent); margin:2rem 0; }
+  .closing{ margin-top:clamp(3.5rem,10vh,6rem); padding-top:2.5rem; border-top:1px solid var(--line); }
+  .closing .small{ margin:0; font-style:italic; color:var(--muted); font-size:1.25rem; }
+  .closing .name{ display:block; margin:.15em 0 1.75rem; font-family:var(--display); font-weight:700; font-size:clamp(2.6rem,1rem + 5vw,4.5rem); line-height:1; letter-spacing:-.035em; color:var(--sleeve); }
+  .closing .heart{ width:28px; height:28px; display:block; margin:0 0 1.75rem; fill:var(--sleeve); }
 
+  /* ---------- small screens ---------- */
   @media (max-width:860px){
-    :root{ --offset:0rem; }
-    .pull .inner{ padding-left:0; }
-    .slide{ padding-top:5rem; padding-bottom:5.5rem; }
+    .reader{ grid-template-columns:1fr; }
+    .rail{
+      position:sticky; top:0; z-index:5; height:auto; max-height:100dvh;
+      flex-direction:row; flex-wrap:wrap; align-items:center; gap:.75rem;
+      padding:.65rem 1rem;
+    }
+    .rail-top{ order:1; flex:0 0 auto; gap:.75rem; }
+    .disc-mini{ width:36px; height:36px; }
+    .rail-head{ order:2; flex:1; min-width:0; }
+    .rail-title{ font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .rail-sub{ display:none; }
+    .menu-btn{
+      order:3; display:flex; align-items:center; justify-content:center;
+      width:44px; height:44px; border-radius:6px; border:1px solid rgba(255,255,255,.35);
+      background:transparent; color:#FFFFFF; cursor:pointer;
+    }
+    .menu-btn svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; }
+    .tracks{ order:4; flex:0 0 100%; display:none; max-height:60dvh; }
+    .rail.menu-open .tracks{ display:block; }
+    .progress{ left:0; top:auto; bottom:0; }
+    .column > *, .column .wide{ max-width:none; }
   }
 
   @media (prefers-reduced-motion:reduce){
     html{ scroll-behavior:auto; }
-    .js .landing-copy > *, .js .landing-art{ animation:none; opacity:1; transform:none; }
-    .js .slide .inner > *{ opacity:1 !important; transform:none !important; transition:none !important; }
-    .landing, .landing.leaving, .letter, .env-flap, .env-seal, .env-paper, .envelope, .progress{ transition:none; }
+    .js .landing-copy > *, .js .sleeve-wrap{ animation:none; opacity:1; transform:none; }
+    .js .rv{ opacity:1 !important; transform:none !important; transition:none !important; }
+    .spin .disc-mini svg{ animation:none; }
+    .landing, .reader, .sleeve, .sleeve-disc, .sleeve-face{ transition:none; }
+    .reading .progress{ animation:none; transform:scaleX(0); }
   }
 </style>
 </head>
-<body>
+<body class="on-landing">
 
 <svg class="icon-defs" aria-hidden="true" focusable="false">
   <symbol id="heart" viewBox="0 0 48 48">
     <path d="M24 40C24 40 6 28.5 6 16.8C6 10.8 10.7 6 16.4 6C19.7 6 22.6 7.7 24 10.3C25.4 7.7 28.3 6 31.6 6C37.3 6 42 10.8 42 16.8C42 28.5 24 40 24 40Z"/>
   </symbol>
+  <symbol id="disc" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="98" fill="#111111"/>
+    <circle cx="100" cy="100" r="88" fill="none" stroke="#FFFFFF" stroke-opacity=".08" stroke-width="1"/>
+    <circle cx="100" cy="100" r="78" fill="none" stroke="#FFFFFF" stroke-opacity=".08" stroke-width="1"/>
+    <circle cx="100" cy="100" r="68" fill="none" stroke="#FFFFFF" stroke-opacity=".08" stroke-width="1"/>
+    <circle cx="100" cy="100" r="58" fill="none" stroke="#FFFFFF" stroke-opacity=".08" stroke-width="1"/>
+    <circle cx="100" cy="100" r="34" fill="#E8ECFA"/>
+    <path d="M100 118C100 118 85 108.5 85 99C85 94 88.9 90 93.6 90C96.4 90 98.8 91.4 100 93.6C101.2 91.4 103.6 90 106.4 90C111.1 90 115 94 115 99C115 108.5 100 118 100 118Z" fill="#1D3FA8"/>
+    <circle cx="100" cy="100" r="3" fill="#111111"/>
+  </symbol>
 </svg>
 
-<div class="ambient" aria-hidden="true"></div>
 <div class="progress" id="progress" aria-hidden="true"></div>
 
 <audio id="bgMusic" loop preload="auto">
   <source src="bg.mp3" type="audio/mpeg">
 </audio>
 
-<button class="btn-icon music-toggle" id="musicToggle" type="button" aria-label="Mute music" aria-pressed="false">
-  <svg viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>
-    <path class="waves" d="M15.5 9a4 4 0 0 1 0 6"/>
-    <path class="waves" d="M18 6.5a8 8 0 0 1 0 11"/>
-    <path class="slash" d="M15 9.5l5 5M20 9.5l-5 5"/>
-  </svg>
-</button>
-
-<div class="counter" id="counter" aria-hidden="true"><b id="cur">01</b> / <span id="tot">72</span></div>
-<div class="nav">
-  <button class="btn-icon" id="prev" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
-  <button class="btn-icon" id="next" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10l6 6 6-6"/></svg></button>
-</div>
-
 <section class="landing" id="landing">
   <div class="landing-copy">
     <h1>Happy birthday, Jessica.</h1>
-    <p>A long letter, written for you. Open the envelope to begin.</p>
+    <p>A long letter, written for you. Open the sleeve to begin.</p>
     <button class="cta" id="cta" type="button">Open the letter</button>
   </div>
 
-  <div class="landing-art">
-    <button class="envelope" id="envelope" type="button" tabindex="-1" aria-hidden="true">
-      <svg viewBox="0 0 320 230" xmlns="http://www.w3.org/2000/svg">
-        <rect x="20" y="50" width="280" height="160" rx="6" fill="#FFFFFF" stroke="rgba(27,26,24,.16)"/>
-        <path class="env-flap" d="M20,50 L160,150 L300,50 Z" fill="#FDEBEC" stroke="rgba(27,26,24,.16)" stroke-linejoin="round"/>
-        <g class="env-paper">
-          <rect x="56" y="84" width="208" height="112" rx="4" fill="#FBFBFA" stroke="rgba(27,26,24,.14)"/>
-          <path d="M80 114h120M80 134h160M80 154h100" stroke="rgba(27,26,24,.14)" stroke-width="2" stroke-linecap="round" fill="none"/>
-        </g>
-        <path d="M20,210 L160,128 L300,210 Z" fill="#F7F6F3" stroke="rgba(27,26,24,.16)" stroke-linejoin="round"/>
-        <g class="env-seal">
-          <circle cx="160" cy="124" r="17" fill="#9F2F2D"/>
-          <use href="#heart" x="150" y="114" width="20" height="20" style="fill:#FFFFFF"/>
-        </g>
-      </svg>
+  <div class="sleeve-wrap">
+    <button class="sleeve" id="sleeve" type="button" tabindex="-1" aria-hidden="true">
+      <span class="sleeve-disc"><svg aria-hidden="true"><use href="#disc"/></svg></span>
+      <span class="sleeve-face"><b>For Jessica</b><span>Side A. Many tracks.</span></span>
     </button>
   </div>
 </section>
 
-<main class="letter" id="letterPage">
-  <section class="slide opening" data-i="0">
-    <div class="inner">
-      <svg class="ico-heart" aria-hidden="true"><use href="#heart"/></svg>
-      <h1 id="letterTitle" tabindex="-1" style="--i:1">Happy birthday, Jessica Tanji!</h1>
-      <p class="hint" style="--i:3">Scroll, or press <kbd>&darr;</kbd> to read on.</p>
+<div class="reader" id="reader">
+  <aside class="rail" id="rail">
+    <div class="rail-top">
+      <div class="disc-mini" aria-hidden="true"><svg><use href="#disc"/></svg></div>
+      <button class="music-toggle" id="musicToggle" type="button" aria-label="Mute music" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>
+          <path class="waves" d="M15.5 9a4 4 0 0 1 0 6"/>
+          <path class="waves" d="M18 6.5a8 8 0 0 1 0 11"/>
+          <path class="slash" d="M15 9.5l5 5M20 9.5l-5 5"/>
+        </svg>
+      </button>
     </div>
-  </section>
-
-<section class="slide prose" data-i="1"><div class="inner"><p>I just wanted to take some time to properly wish you a very happy birthday and tell you how much I appreciate you. I could honestly just say “happy birthday” and leave it there, but I feel like your birthday deserves more than just a few words, so here I am writing this ridiculously long message instead.</p></div></section>
-<section class="slide prose" data-i="2"><div class="inner"><p>I hope you know that today isn’t just another ordinary day. It’s a day to celebrate you, everything you’ve been through, everything you’ve accomplished, all the memories you’ve made, and all the people whose lives you’ve somehow become a part of. Another year has passed, and even though birthdays can sometimes feel like just another date on the calendar, I think they’re also a really good reminder of how much can happen in a single year and how much a person can grow without even realizing it.</p></div></section>
-<section class="slide prose" data-i="3"><div class="inner"><p>So before anything else, I genuinely hope you have an amazing birthday.</p></div></section>
-<section class="slide prose" data-i="4"><div class="inner"><p>I hope you wake up today feeling happy and appreciated. I hope you get to spend time with people who make you smile. I hope you get to eat your favorite food, enjoy your favorite things, laugh about random stuff, take a ridiculous amount of pictures, receive some nice messages, and just have a day that feels special.</p></div></section>
-<section class="slide lines" data-i="5"><div class="inner"><p style="--i:0">And I hope you don’t spend the whole day worrying about whether everything is perfect.</p><p style="--i:1">It doesn’t have to be perfect.</p></div></section>
-<section class="slide prose" data-i="6"><div class="inner"><p>Sometimes the best birthdays aren’t the ones where everything goes exactly according to plan. Sometimes they’re the ones where something completely random happens and ends up becoming the funniest memory. Sometimes it’s a random conversation that you didn’t expect to have. Sometimes it’s laughing over something incredibly stupid. Sometimes it’s simply being around people you enjoy and realizing that you’re having a genuinely good time.</p></div></section>
-<section class="slide lines" data-i="7"><div class="inner"><p style="--i:0">Those are the moments I hope you get today.</p><p style="--i:1">I also want to say that I appreciate you for being you.</p></div></section>
-<section class="slide prose" data-i="8"><div class="inner"><p>There are so many people in the world, and every person has their own personality, their own way of thinking, their own experiences, their own sense of humor, their own little habits, and their own story. And that’s what makes every person different. You don’t need to be exactly like anyone else, and you don’t need to compare yourself to anyone else.</p></div></section>
-<section class="slide pull" data-i="9" data-dark><div class="inner"><p>You’re Jessica.</p><p>And that’s already enough.</p></div></section>
-<section class="slide prose" data-i="10"><div class="inner"><p>I hope you continue being yourself even when other people don’t completely understand you. I hope you continue doing the things that make you happy. I hope you continue surrounding yourself with people who genuinely care about you and want to see you doing well. And I hope you always remember that the people who truly appreciate you will appreciate you for who you actually are, not for some version of you that you feel like you have to become.</p></div></section>
-<section class="slide lines" data-i="11"><div class="inner"><p style="--i:0">You’ve probably changed a lot over the years, even if you don’t notice it yourself.</p><p style="--i:1">You’ve learned things.</p><p style="--i:2">You’ve experienced things.</p><p style="--i:3">You’ve met different people.</p></div></section>
-<section class="slide lines" data-i="12"><div class="inner"><p style="--i:0">You’ve made memories.</p><p style="--i:1">You’ve probably made mistakes too.</p><p style="--i:2">And that’s completely okay.</p></div></section>
-<section class="slide prose" data-i="13"><div class="inner"><p>Nobody gets through life without making mistakes. Nobody has everything figured out. Nobody knows exactly what they’re doing all the time. Growing up is basically just constantly learning something new, realizing you were wrong about something, figuring things out, making another mistake, learning from that mistake, and somehow continuing forward anyway.</p></div></section>
-<section class="slide lines" data-i="14"><div class="inner"><p style="--i:0">So don’t be too hard on yourself when things don’t go the way you wanted.</p><p style="--i:1">One bad day doesn’t make your whole life bad.</p><p style="--i:2">One mistake doesn’t define you.</p><p style="--i:3">One failure doesn’t mean you’re a failure.</p></div></section>
-<section class="slide lines" data-i="15"><div class="inner"><p style="--i:0">One awkward moment doesn’t mean everyone remembers it forever.</p><p style="--i:1">And one difficult period doesn’t mean things will always be difficult.</p><p style="--i:2">There are still so many things ahead of you that you haven’t experienced yet.</p><p style="--i:3">There are people you haven’t met.</p></div></section>
-<section class="slide lines" data-i="16"><div class="inner"><p style="--i:0">Places you haven’t visited.</p><p style="--i:1">Things you haven’t learned.</p><p style="--i:2">Memories you haven’t made.</p><p style="--i:3">Jokes you haven’t laughed at.</p></div></section>
-<section class="slide lines" data-i="17"><div class="inner"><p style="--i:0">Songs you haven’t discovered.</p><p style="--i:1">Foods you haven’t tried.</p><p style="--i:2">Random conversations you haven’t had.</p><p style="--i:3">And countless moments that you don’t even know are going to become important to you someday.</p></div></section>
-<section class="slide pull" data-i="18" data-dark><div class="inner"><p>That’s one of the coolest things about life.</p></div></section>
-<section class="slide lines" data-i="19"><div class="inner"><p style="--i:0">You never really know which ordinary day is going to turn into a memory you’ll remember for years.</p><p style="--i:1">So for this next year of your life, I hope you get plenty of those moments.</p><p style="--i:2">I hope you have days where you laugh so hard that you can’t even remember what started the laughter.</p><p style="--i:3">I hope you have conversations that somehow last way longer than they were supposed to.</p><p style="--i:4">I hope you experience things that make you genuinely excited.</p></div></section>
-<section class="slide lines" data-i="20"><div class="inner"><p style="--i:0">I hope you discover new interests.</p><p style="--i:1">I hope you become more confident in yourself.</p><p style="--i:2">I hope you accomplish things that you’re proud of.</p><p style="--i:3">I hope you have opportunities that you never expected.</p><p style="--i:4">I hope you get to try things you’ve always wanted to try.</p></div></section>
-<section class="slide lines" data-i="21"><div class="inner"><p style="--i:0">And I hope you never feel like you’re falling behind just because someone else seems to be moving faster.</p><p style="--i:1">Everyone has their own pace.</p><p style="--i:2">Everyone’s story is different.</p><p style="--i:3">You don’t have to live according to somebody else’s timeline.</p><p style="--i:4">Your life isn’t a competition.</p></div></section>
-<section class="slide lines" data-i="22"><div class="inner"><p style="--i:0">You don’t need to have everything figured out immediately.</p><p style="--i:1">It’s okay to take your time.</p><p style="--i:2">It’s okay to change your mind.</p><p style="--i:3">It’s okay to not know what you want yet.</p></div></section>
-<section class="slide lines" data-i="23"><div class="inner"><p style="--i:0">It’s okay to make mistakes.</p><p style="--i:1">It’s okay to start over.</p><p style="--i:2">And it’s okay to simply enjoy where you are right now.</p><p style="--i:3">I hope this new year of your life brings you more happiness than the last one.</p></div></section>
-<section class="slide prose" data-i="24"><div class="inner"><p>I hope it brings you new experiences, new memories, new opportunities, and hopefully a lot less unnecessary stress.</p></div></section>
-<section class="slide lines" data-i="25"><div class="inner"><p style="--i:0">I hope you have more reasons to smile.</p><p style="--i:1">More reasons to laugh.</p><p style="--i:2">More reasons to be proud of yourself.</p><p style="--i:3">More moments where you stop and think, “Wow, I’m actually really happy right now.”</p><p style="--i:4">And whenever life gets difficult, I hope you remember that difficult moments don’t last forever.</p></div></section>
-<section class="slide lines" data-i="26"><div class="inner"><p style="--i:0">There will always be better days waiting ahead.</p><p style="--i:1">Sometimes you just have to get through the bad ones before you can appreciate the good ones.</p><p style="--i:2">And when you do have good days, don’t be afraid to enjoy them.</p><p style="--i:3">Take the pictures.</p></div></section>
-<section class="slide lines" data-i="27"><div class="inner"><p style="--i:0">Save the messages.</p><p style="--i:1">Remember the jokes.</p><p style="--i:2">Keep the memories.</p><p style="--i:3">Appreciate the people around you.</p></div></section>
-<section class="slide prose" data-i="28"><div class="inner"><p>Because someday, you’ll look back and realize that those little moments were actually some of the best parts of your life.</p></div></section>
-<section class="slide lines" data-i="29"><div class="inner"><p style="--i:0">I also hope that you continue meeting people who treat you well.</p><p style="--i:1">People who listen when you talk.</p><p style="--i:2">People who respect you.</p><p style="--i:3">People who support you.</p><p style="--i:4">People who can make you laugh.</p></div></section>
-<section class="slide lines" data-i="30"><div class="inner"><p style="--i:0">People who aren’t afraid to celebrate your successes.</p><p style="--i:1">People who can be there when things aren’t going perfectly.</p><p style="--i:2">And people who make you feel comfortable enough to be completely yourself.</p><p style="--i:3">Good people are worth appreciating, and I hope you have plenty of them around you.</p></div></section>
-<section class="slide prose" data-i="31"><div class="inner"><p>And speaking of appreciation, I genuinely appreciate having you as someone I can talk to and share moments with. Even if we’ve had completely random conversations, stupid jokes, confusing situations, or moments where neither of us knew what was happening, those little things still become memories.</p></div></section>
-<section class="slide prose" data-i="32"><div class="inner"><p>Sometimes you don’t realize how meaningful someone’s presence is until you think about all the little moments you’ve shared.</p></div></section>
-<section class="slide lines" data-i="33"><div class="inner"><p style="--i:0">The random conversations.</p><p style="--i:1">The inside jokes.</p><p style="--i:2">The stupid arguments.</p><p style="--i:3">The moments where you’re both laughing for absolutely no reason.</p><p style="--i:4">The times where one person says something completely normal and somehow it becomes funny.</p></div></section>
-<section class="slide lines" data-i="34"><div class="inner"><p style="--i:0">The moments that weren’t planned at all.</p><p style="--i:1">Those are the things that make friendships and connections feel real.</p><p style="--i:2">And I hope there are many more moments like that ahead.</p><p style="--i:3">More memories.</p><p style="--i:4">More laughs.</p></div></section>
-<section class="slide lines" data-i="35"><div class="inner"><p style="--i:0">More random conversations.</p><p style="--i:1">More stupid jokes.</p><p style="--i:2">More stories to tell.</p><p style="--i:3">More things to look back on and laugh about.</p><p style="--i:4">So today, I hope you allow yourself to feel appreciated.</p></div></section>
-<section class="slide prose" data-i="36"><div class="inner"><p>Not because it’s your birthday and people are expected to say nice things, but because you genuinely deserve to know that people care about you.</p></div></section>
-<section class="slide lines" data-i="37"><div class="inner"><p style="--i:0">You matter to the people around you.</p><p style="--i:1">Your presence matters.</p><p style="--i:2">Your personality matters.</p><p style="--i:3">Your memories matter.</p><p style="--i:4">Your experiences matter.</p></div></section>
-<section class="slide lines" data-i="38"><div class="inner"><p style="--i:0">And the things you do, even the small things, can mean more to people than you realize.</p><p style="--i:1">Sometimes you can make someone’s day without even knowing it.</p><p style="--i:2">Sometimes a simple conversation can make someone feel better.</p><p style="--i:3">Sometimes a joke can make someone laugh when they really needed it.</p><p style="--i:4">Sometimes just being there can mean something.</p></div></section>
-<section class="slide lines" data-i="39"><div class="inner"><p style="--i:0">You might not always notice the effect you have on people, but that doesn’t mean you don’t have one.</p><p style="--i:1">So please don’t underestimate yourself.</p><p style="--i:2">And please don’t forget to appreciate yourself too.</p><p style="--i:3">You’ve made it through every difficult day you’ve faced so far.</p><p style="--i:4">That’s something worth remembering.</p></div></section>
-<section class="slide lines" data-i="40"><div class="inner"><p style="--i:0">Every time you thought you couldn’t handle something, you eventually got through it.</p><p style="--i:1">Every time something went wrong, you found a way forward.</p><p style="--i:2">Every year you’ve lived has brought you to where you are now.</p><p style="--i:3">And there’s still so much ahead.</p><p style="--i:4">So here’s to another year.</p></div></section>
-<section class="slide lines" data-i="41"><div class="inner"><p style="--i:0">Another year of learning.</p><p style="--i:1">Another year of growing.</p><p style="--i:2">Another year of laughing.</p><p style="--i:3">Another year of making memories.</p><p style="--i:4">Another year of random decisions.</p></div></section>
-<section class="slide lines" data-i="42"><div class="inner"><p style="--i:0">Another year of probably making some questionable choices.</p><p style="--i:1">Another year of discovering new things.</p><p style="--i:2">Another year of meeting new people.</p><p style="--i:3">Another year of becoming a little more experienced.</p><p style="--i:4">Another year of stories.</p></div></section>
-<section class="slide lines" data-i="43"><div class="inner"><p style="--i:0">Another year of adventures.</p><p style="--i:1">Another year of opportunities.</p><p style="--i:2">And hopefully, another year filled with plenty of happiness.</p><p style="--i:3">I hope you achieve the things you’ve been working toward.</p><p style="--i:4">I hope you reach goals that you’ve been hoping to reach.</p></div></section>
-<section class="slide lines" data-i="44"><div class="inner"><p style="--i:0">I hope you find new goals when you accomplish the old ones.</p><p style="--i:1">I hope you’re proud of your progress, even when it feels slow.</p><p style="--i:2">And I hope you remember that progress doesn’t always have to be something huge.</p><p style="--i:3">Sometimes progress is simply getting through another day.</p><p style="--i:4">Sometimes it’s learning something new.</p></div></section>
-<section class="slide lines" data-i="45"><div class="inner"><p style="--i:0">Sometimes it’s becoming better at something.</p><p style="--i:1">Sometimes it’s realizing what you don’t want.</p><p style="--i:2">Sometimes it’s becoming more comfortable with yourself.</p><p style="--i:3">Sometimes it’s simply choosing to keep going.</p><p style="--i:4">All of those things count.</p></div></section>
-<section class="slide lines" data-i="46"><div class="inner"><p style="--i:0">So don’t overlook the small victories.</p><p style="--i:1">Celebrate them.</p><p style="--i:2">You deserve to.</p><p style="--i:3">And today especially, celebrate yourself.</p><p style="--i:4">Eat the cake.</p></div></section>
-<section class="slide lines" data-i="47"><div class="inner"><p style="--i:0">Enjoy the food.</p><p style="--i:1">Take the pictures.</p><p style="--i:2">Laugh with your friends.</p><p style="--i:3">Open your presents.</p><p style="--i:4">Read the birthday messages.</p></div></section>
-<section class="slide lines" data-i="48"><div class="inner"><p style="--i:0">And enjoy being the birthday person for once.</p><p style="--i:1">You only get one birthday each year, so you might as well make the most of it.</p><p style="--i:2">I hope today gives you memories that stay with you for a long time.</p><p style="--i:3">I hope you receive messages that make you smile.</p><p style="--i:4">I hope someone surprises you.</p></div></section>
-<section class="slide lines" data-i="49"><div class="inner"><p style="--i:0">I hope you get something you’ve wanted.</p><p style="--i:1">I hope you hear something nice that you weren’t expecting.</p><p style="--i:2">I hope you laugh at least a hundred times.</p><p style="--i:3">And if the day doesn’t go exactly as planned, that’s okay too.</p><p style="--i:4">A birthday doesn’t need to be perfect to be meaningful.</p></div></section>
-<section class="slide lines" data-i="50"><div class="inner"><p style="--i:0">Sometimes just having the people you care about around you is enough.</p><p style="--i:1">And if nobody has told you yet today:</p><p style="--i:2">Happy birthday, Jessica.</p><p style="--i:3">Seriously.</p><p style="--i:4">Happy birthday.</p></div></section>
-<section class="slide prose" data-i="51"><div class="inner"><p>I’m wishing you a year filled with happiness, good memories, exciting experiences, good health, personal growth, success in whatever you decide to pursue, and most importantly, plenty of reasons to smile.</p></div></section>
-<section class="slide lines" data-i="52"><div class="inner"><p style="--i:0">I hope you have the courage to chase the things you want.</p><p style="--i:1">I hope you have the patience to wait for the things that take time.</p><p style="--i:2">I hope you have the strength to get through the difficult things.</p><p style="--i:3">I hope you have the wisdom to learn from your experiences.</p><p style="--i:4">I hope you have the confidence to be yourself.</p></div></section>
-<section class="slide lines" data-i="53"><div class="inner"><p style="--i:0">And I hope you have the people around you who remind you that you don’t have to do everything alone.</p><p style="--i:1">May this next chapter of your life be full of unexpected happiness.</p><p style="--i:2">May you find new reasons to be excited about the future.</p><p style="--i:3">May you look back at this year someday and realize just how many amazing things happened.</p><p style="--i:4">May you make memories that you’ll still laugh about years from now.</p></div></section>
-<section class="slide lines" data-i="54"><div class="inner"><p style="--i:0">May you experience things that change your perspective for the better.</p><p style="--i:1">May you accomplish things you once thought were impossible.</p><p style="--i:2">May you become someone you’re proud to be.</p><p style="--i:3">And most importantly, may you never forget to enjoy the journey while you’re becoming that person.</p><p style="--i:4">Because life isn’t only about reaching the destination.</p></div></section>
-<section class="slide lines" data-i="55"><div class="inner"><p style="--i:0">It’s also about everything that happens along the way.</p><p style="--i:1">The people you meet.</p><p style="--i:2">The places you go.</p><p style="--i:3">The conversations you have.</p></div></section>
-<section class="slide lines" data-i="56"><div class="inner"><p style="--i:0">The mistakes you make.</p><p style="--i:1">The lessons you learn.</p><p style="--i:2">The random moments.</p><p style="--i:3">The unexpected opportunities.</p></div></section>
-<section class="slide lines" data-i="57"><div class="inner"><p style="--i:0">The laughter.</p><p style="--i:1">The sadness.</p><p style="--i:2">The excitement.</p><p style="--i:3">The calm moments.</p></div></section>
-<section class="slide lines" data-i="58"><div class="inner"><p style="--i:0">The chaotic moments.</p><p style="--i:1">All of it becomes part of your story.</p><p style="--i:2">And this birthday is just another page in that story.</p><p style="--i:3">There’s still so much left to write.</p></div></section>
-<section class="slide pull" data-i="59" data-dark><div class="inner"><p>So here’s to Jessica Tanji.</p></div></section>
-<section class="slide lines" data-i="60"><div class="inner"><p style="--i:0">Here’s to another year of life.</p><p style="--i:1">Another year of memories.</p><p style="--i:2">Another year of laughter.</p><p style="--i:3">Another year of growth.</p><p style="--i:4">Another year of experiences.</p></div></section>
-<section class="slide lines" data-i="61"><div class="inner"><p style="--i:0">Another year of being completely yourself.</p><p style="--i:1">And another year of becoming an even stronger, wiser, happier, and more confident version of yourself.</p><p style="--i:2">Thank you for being you.</p><p style="--i:3">Thank you for the memories.</p><p style="--i:4">Thank you for the laughs.</p></div></section>
-<section class="slide prose" data-i="62"><div class="inner"><p>Thank you for all the little moments that might seem ordinary but are actually the things that make life memorable.</p></div></section>
-<section class="slide lines" data-i="63"><div class="inner"><p style="--i:0">And thank you for simply being someone worth celebrating today.</p><p style="--i:1">I hope your birthday is absolutely amazing.</p><p style="--i:2">I hope your day is filled with happiness from beginning to end.</p><p style="--i:3">I hope you smile so much your face gets tired.</p><p style="--i:4">I hope you laugh until you can’t breathe.</p></div></section>
-<section class="slide lines" data-i="64"><div class="inner"><p style="--i:0">I hope your cake is delicious.</p><p style="--i:1">I hope your presents are great.</p><p style="--i:2">I hope your photos turn out amazing.</p><p style="--i:3">I hope your favorite people remember your birthday.</p><p style="--i:4">I hope you get to do something you genuinely enjoy.</p></div></section>
-<section class="slide lines" data-i="65"><div class="inner"><p style="--i:0">And I hope when the day finally ends, you can look back and say:</p><p style="--i:1">“That was a really good birthday.”</p><p style="--i:2">So once again...</p><p style="--i:3">Happy birthday, Jessica Tanji.</p><p style="--i:4">I genuinely hope this next chapter of your life is one of the best ones yet.</p></div></section>
-<section class="slide lines" data-i="66"><div class="inner"><p style="--i:0">Keep being yourself.</p><p style="--i:1">Keep growing.</p><p style="--i:2">Keep laughing.</p><p style="--i:3">Keep making memories.</p><p style="--i:4">Keep doing the things that make you happy.</p></div></section>
-<section class="slide lines" data-i="67"><div class="inner"><p style="--i:0">Don’t let temporary problems convince you that your future won’t be good.</p><p style="--i:1">Don’t let other people’s opinions decide your worth.</p><p style="--i:2">Don’t compare your journey to someone else’s.</p><p style="--i:3">And don’t forget how far you’ve already come.</p></div></section>
-<section class="slide prose" data-i="68"><div class="inner"><p>There’s so much waiting for you in the future, and I hope you get to experience more happiness, more laughter, more adventures, more success, and more unforgettable moments than you can imagine right now.</p></div></section>
-<section class="slide lines" data-i="69"><div class="inner"><p style="--i:0">Have an absolutely wonderful birthday, Jessica.</p><p style="--i:1">You deserve a day full of happiness, a year full of good memories, and a future full of amazing possibilities.</p><p style="--i:2">Once again, happy birthday!!!</p><p style="--i:3">I hope you enjoy every single moment of your day.</p></div></section>
-<section class="slide lines" data-i="70"><div class="inner"><p style="--i:0">And yes, I know this message is ridiculously long.</p><p style="--i:1">But hey...</p><p style="--i:2">It’s your birthday.</p><p style="--i:3">You’re worth the extra words.</p></div></section>
-
-  <section class="slide closing" data-i="end">
-    <div class="inner">
-      <p class="signoff">Happy birthday,</p>
-      <span class="name" style="--i:1">Jessica Tanji</span>
-      <svg class="ico-heart" aria-hidden="true" style="--i:2"><use href="#heart"/></svg>
-      <button class="cta ghost" id="restart" type="button" style="--i:3">Read again from the start</button>
+    <div class="rail-head">
+      <p class="rail-title" id="railTitle">For Jessica Tanji</p>
+      <p class="rail-sub">A birthday letter, in <span id="trackCount">11</span> tracks</p>
     </div>
-  </section>
-</main>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="tracks" aria-label="Show tracks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 12h14M5 16h14"/></svg></button>
+    <ol class="tracks" id="tracks" aria-label="Chapters">
+      <li><a href="#t1"><span>01</span>Ridiculously long</a></li>
+      <li><a href="#t2"><span>02</span>You're Jessica</a></li>
+      <li><a href="#t3"><span>03</span>Mistakes happen</a></li>
+      <li><a href="#t4"><span>04</span>Go easy on yourself</a></li>
+      <li><a href="#t5"><span>05</span>Ordinary days</a></li>
+      <li><a href="#t6"><span>06</span>Good people</a></li>
+      <li><a href="#t7"><span>07</span>Little moments</a></li>
+      <li><a href="#t8"><span>08</span>You matter</a></li>
+      <li><a href="#t9"><span>09</span>Wishes</a></li>
+      <li><a href="#t10"><span>10</span>Here's to you</a></li>
+      <li><a href="#t11"><span>11</span>Thank you</a></li>
+    </ol>
+  </aside>
+
+  <main class="column" id="column">
+    <header class="opener">
+      <h1 id="letterTitle" tabindex="-1">Happy birthday, Jessica Tanji!</h1>
+      <p>Take your time. Use the tracks on the side to jump around, or just keep scrolling.</p>
+    </header>
+
+    <section class="track" id="t1" aria-labelledby="t1h"><h2 id="t1h">Ridiculously long</h2>
+      <p class="rv">I just wanted to take some time to properly wish you a very happy birthday and tell you how much I appreciate you. I could honestly just say “happy birthday” and leave it there, but I feel like your birthday deserves more than just a few words, so here I am writing this ridiculously long message instead.</p>
+      <p class="rv">I hope you know that today isn’t just another ordinary day. It’s a day to celebrate you, everything you’ve been through, everything you’ve accomplished, all the memories you’ve made, and all the people whose lives you’ve somehow become a part of. Another year has passed, and even though birthdays can sometimes feel like just another date on the calendar, I think they’re also a really good reminder of how much can happen in a single year and how much a person can grow without even realizing it.</p>
+      <p class="rv">So before anything else, I genuinely hope you have an amazing birthday.</p>
+      <p class="rv">I hope you wake up today feeling happy and appreciated. I hope you get to spend time with people who make you smile. I hope you get to eat your favorite food, enjoy your favorite things, laugh about random stuff, take a ridiculous amount of pictures, receive some nice messages, and just have a day that feels special.</p>
+      <div class="stanza"><p class="rv">And I hope you don’t spend the whole day worrying about whether everything is perfect.</p><p class="rv">It doesn’t have to be perfect.</p></div>
+      <p class="rv">Sometimes the best birthdays aren’t the ones where everything goes exactly according to plan. Sometimes they’re the ones where something completely random happens and ends up becoming the funniest memory. Sometimes it’s a random conversation that you didn’t expect to have. Sometimes it’s laughing over something incredibly stupid. Sometimes it’s simply being around people you enjoy and realizing that you’re having a genuinely good time.</p>
+      <div class="stanza"><p class="rv">Those are the moments I hope you get today.</p><p class="rv">I also want to say that I appreciate you for being you.</p></div>
+    </section>
+
+    <section class="track" id="t2" aria-labelledby="t2h"><h2 id="t2h">You're Jessica</h2>
+      <p class="rv">There are so many people in the world, and every person has their own personality, their own way of thinking, their own experiences, their own sense of humor, their own little habits, and their own story. And that’s what makes every person different. You don’t need to be exactly like anyone else, and you don’t need to compare yourself to anyone else.</p>
+      <blockquote class="pull rv"><p>You’re Jessica.</p><p>And that’s already enough.</p></blockquote>
+      <p class="rv">I hope you continue being yourself even when other people don’t completely understand you. I hope you continue doing the things that make you happy. I hope you continue surrounding yourself with people who genuinely care about you and want to see you doing well. And I hope you always remember that the people who truly appreciate you will appreciate you for who you actually are, not for some version of you that you feel like you have to become.</p>
+    </section>
+
+    <section class="track" id="t3" aria-labelledby="t3h"><h2 id="t3h">Mistakes happen</h2>
+      <div class="stanza"><p class="rv">You’ve probably changed a lot over the years, even if you don’t notice it yourself.</p><p class="rv">You’ve learned things.</p><p class="rv">You’ve experienced things.</p><p class="rv">You’ve met different people.</p><p class="rv">You’ve made memories.</p><p class="rv">You’ve probably made mistakes too.</p><p class="rv">And that’s completely okay.</p></div>
+      <p class="rv">Nobody gets through life without making mistakes. Nobody has everything figured out. Nobody knows exactly what they’re doing all the time. Growing up is basically just constantly learning something new, realizing you were wrong about something, figuring things out, making another mistake, learning from that mistake, and somehow continuing forward anyway.</p>
+    </section>
+
+    <section class="track" id="t4" aria-labelledby="t4h"><h2 id="t4h">Go easy on yourself</h2>
+      <div class="stanza"><p class="rv">So don’t be too hard on yourself when things don’t go the way you wanted.</p><p class="rv">One bad day doesn’t make your whole life bad.</p><p class="rv">One mistake doesn’t define you.</p><p class="rv">One failure doesn’t mean you’re a failure.</p><p class="rv">One awkward moment doesn’t mean everyone remembers it forever.</p><p class="rv">And one difficult period doesn’t mean things will always be difficult.</p><p class="rv">There are still so many things ahead of you that you haven’t experienced yet.</p><p class="rv">There are people you haven’t met.</p><p class="rv">Places you haven’t visited.</p><p class="rv">Things you haven’t learned.</p><p class="rv">Memories you haven’t made.</p><p class="rv">Jokes you haven’t laughed at.</p><p class="rv">Songs you haven’t discovered.</p><p class="rv">Foods you haven’t tried.</p><p class="rv">Random conversations you haven’t had.</p><p class="rv">And countless moments that you don’t even know are going to become important to you someday.</p></div>
+    </section>
+
+    <section class="track" id="t5" aria-labelledby="t5h"><h2 id="t5h">Ordinary days</h2>
+      <blockquote class="pull rv"><p>That’s one of the coolest things about life.</p></blockquote>
+      <div class="stanza"><p class="rv">You never really know which ordinary day is going to turn into a memory you’ll remember for years.</p><p class="rv">So for this next year of your life, I hope you get plenty of those moments.</p><p class="rv">I hope you have days where you laugh so hard that you can’t even remember what started the laughter.</p><p class="rv">I hope you have conversations that somehow last way longer than they were supposed to.</p><p class="rv">I hope you experience things that make you genuinely excited.</p><p class="rv">I hope you discover new interests.</p><p class="rv">I hope you become more confident in yourself.</p><p class="rv">I hope you accomplish things that you’re proud of.</p><p class="rv">I hope you have opportunities that you never expected.</p><p class="rv">I hope you get to try things you’ve always wanted to try.</p><p class="rv">And I hope you never feel like you’re falling behind just because someone else seems to be moving faster.</p><p class="rv">Everyone has their own pace.</p><p class="rv">Everyone’s story is different.</p><p class="rv">You don’t have to live according to somebody else’s timeline.</p><p class="rv">Your life isn’t a competition.</p><p class="rv">You don’t need to have everything figured out immediately.</p><p class="rv">It’s okay to take your time.</p><p class="rv">It’s okay to change your mind.</p><p class="rv">It’s okay to not know what you want yet.</p><p class="rv">It’s okay to make mistakes.</p><p class="rv">It’s okay to start over.</p><p class="rv">And it’s okay to simply enjoy where you are right now.</p><p class="rv">I hope this new year of your life brings you more happiness than the last one.</p></div>
+      <p class="rv">I hope it brings you new experiences, new memories, new opportunities, and hopefully a lot less unnecessary stress.</p>
+      <div class="stanza"><p class="rv">I hope you have more reasons to smile.</p><p class="rv">More reasons to laugh.</p><p class="rv">More reasons to be proud of yourself.</p><p class="rv">More moments where you stop and think, “Wow, I’m actually really happy right now.”</p><p class="rv">And whenever life gets difficult, I hope you remember that difficult moments don’t last forever.</p><p class="rv">There will always be better days waiting ahead.</p><p class="rv">Sometimes you just have to get through the bad ones before you can appreciate the good ones.</p><p class="rv">And when you do have good days, don’t be afraid to enjoy them.</p><p class="rv">Take the pictures.</p><p class="rv">Save the messages.</p><p class="rv">Remember the jokes.</p><p class="rv">Keep the memories.</p><p class="rv">Appreciate the people around you.</p></div>
+      <p class="rv">Because someday, you’ll look back and realize that those little moments were actually some of the best parts of your life.</p>
+    </section>
+
+    <section class="track" id="t6" aria-labelledby="t6h"><h2 id="t6h">Good people</h2>
+      <div class="stanza"><p class="rv">I also hope that you continue meeting people who treat you well.</p><p class="rv">People who listen when you talk.</p><p class="rv">People who respect you.</p><p class="rv">People who support you.</p><p class="rv">People who can make you laugh.</p><p class="rv">People who aren’t afraid to celebrate your successes.</p><p class="rv">People who can be there when things aren’t going perfectly.</p><p class="rv">And people who make you feel comfortable enough to be completely yourself.</p><p class="rv">Good people are worth appreciating, and I hope you have plenty of them around you.</p></div>
+    </section>
+
+    <section class="track" id="t7" aria-labelledby="t7h"><h2 id="t7h">Little moments</h2>
+      <p class="rv">And speaking of appreciation, I genuinely appreciate having you as someone I can talk to and share moments with. Even if we’ve had completely random conversations, stupid jokes, confusing situations, or moments where neither of us knew what was happening, those little things still become memories.</p>
+      <p class="rv">Sometimes you don’t realize how meaningful someone’s presence is until you think about all the little moments you’ve shared.</p>
+      <div class="stanza"><p class="rv">The random conversations.</p><p class="rv">The inside jokes.</p><p class="rv">The stupid arguments.</p><p class="rv">The moments where you’re both laughing for absolutely no reason.</p><p class="rv">The times where one person says something completely normal and somehow it becomes funny.</p><p class="rv">The moments that weren’t planned at all.</p><p class="rv">Those are the things that make friendships and connections feel real.</p><p class="rv">And I hope there are many more moments like that ahead.</p><p class="rv">More memories.</p><p class="rv">More laughs.</p><p class="rv">More random conversations.</p><p class="rv">More stupid jokes.</p><p class="rv">More stories to tell.</p><p class="rv">More things to look back on and laugh about.</p><p class="rv">So today, I hope you allow yourself to feel appreciated.</p></div>
+      <p class="rv">Not because it’s your birthday and people are expected to say nice things, but because you genuinely deserve to know that people care about you.</p>
+    </section>
+
+    <section class="track" id="t8" aria-labelledby="t8h"><h2 id="t8h">You matter</h2>
+      <div class="stanza"><p class="rv">You matter to the people around you.</p><p class="rv">Your presence matters.</p><p class="rv">Your personality matters.</p><p class="rv">Your memories matter.</p><p class="rv">Your experiences matter.</p><p class="rv">And the things you do, even the small things, can mean more to people than you realize.</p><p class="rv">Sometimes you can make someone’s day without even knowing it.</p><p class="rv">Sometimes a simple conversation can make someone feel better.</p><p class="rv">Sometimes a joke can make someone laugh when they really needed it.</p><p class="rv">Sometimes just being there can mean something.</p><p class="rv">You might not always notice the effect you have on people, but that doesn’t mean you don’t have one.</p><p class="rv">So please don’t underestimate yourself.</p><p class="rv">And please don’t forget to appreciate yourself too.</p><p class="rv">You’ve made it through every difficult day you’ve faced so far.</p><p class="rv">That’s something worth remembering.</p><p class="rv">Every time you thought you couldn’t handle something, you eventually got through it.</p><p class="rv">Every time something went wrong, you found a way forward.</p><p class="rv">Every year you’ve lived has brought you to where you are now.</p><p class="rv">And there’s still so much ahead.</p><p class="rv">So here’s to another year.</p><p class="rv">Another year of learning.</p><p class="rv">Another year of growing.</p><p class="rv">Another year of laughing.</p><p class="rv">Another year of making memories.</p><p class="rv">Another year of random decisions.</p><p class="rv">Another year of probably making some questionable choices.</p><p class="rv">Another year of discovering new things.</p><p class="rv">Another year of meeting new people.</p><p class="rv">Another year of becoming a little more experienced.</p><p class="rv">Another year of stories.</p><p class="rv">Another year of adventures.</p><p class="rv">Another year of opportunities.</p><p class="rv">And hopefully, another year filled with plenty of happiness.</p><p class="rv">I hope you achieve the things you’ve been working toward.</p><p class="rv">I hope you reach goals that you’ve been hoping to reach.</p><p class="rv">I hope you find new goals when you accomplish the old ones.</p><p class="rv">I hope you’re proud of your progress, even when it feels slow.</p><p class="rv">And I hope you remember that progress doesn’t always have to be something huge.</p><p class="rv">Sometimes progress is simply getting through another day.</p><p class="rv">Sometimes it’s learning something new.</p><p class="rv">Sometimes it’s becoming better at something.</p><p class="rv">Sometimes it’s realizing what you don’t want.</p><p class="rv">Sometimes it’s becoming more comfortable with yourself.</p><p class="rv">Sometimes it’s simply choosing to keep going.</p><p class="rv">All of those things count.</p><p class="rv">So don’t overlook the small victories.</p><p class="rv">Celebrate them.</p><p class="rv">You deserve to.</p><p class="rv">And today especially, celebrate yourself.</p><p class="rv">Eat the cake.</p><p class="rv">Enjoy the food.</p><p class="rv">Take the pictures.</p><p class="rv">Laugh with your friends.</p><p class="rv">Open your presents.</p><p class="rv">Read the birthday messages.</p><p class="rv">And enjoy being the birthday person for once.</p><p class="rv">You only get one birthday each year, so you might as well make the most of it.</p><p class="rv">I hope today gives you memories that stay with you for a long time.</p><p class="rv">I hope you receive messages that make you smile.</p><p class="rv">I hope someone surprises you.</p><p class="rv">I hope you get something you’ve wanted.</p><p class="rv">I hope you hear something nice that you weren’t expecting.</p><p class="rv">I hope you laugh at least a hundred times.</p><p class="rv">And if the day doesn’t go exactly as planned, that’s okay too.</p><p class="rv">A birthday doesn’t need to be perfect to be meaningful.</p><p class="rv">Sometimes just having the people you care about around you is enough.</p><p class="rv">And if nobody has told you yet today:</p><p class="rv">Happy birthday, Jessica.</p><p class="rv">Seriously.</p><p class="rv">Happy birthday.</p></div>
+    </section>
+
+    <section class="track" id="t9" aria-labelledby="t9h"><h2 id="t9h">Wishes</h2>
+      <p class="rv">I’m wishing you a year filled with happiness, good memories, exciting experiences, good health, personal growth, success in whatever you decide to pursue, and most importantly, plenty of reasons to smile.</p>
+      <div class="stanza"><p class="rv">I hope you have the courage to chase the things you want.</p><p class="rv">I hope you have the patience to wait for the things that take time.</p><p class="rv">I hope you have the strength to get through the difficult things.</p><p class="rv">I hope you have the wisdom to learn from your experiences.</p><p class="rv">I hope you have the confidence to be yourself.</p><p class="rv">And I hope you have the people around you who remind you that you don’t have to do everything alone.</p><p class="rv">May this next chapter of your life be full of unexpected happiness.</p><p class="rv">May you find new reasons to be excited about the future.</p><p class="rv">May you look back at this year someday and realize just how many amazing things happened.</p><p class="rv">May you make memories that you’ll still laugh about years from now.</p><p class="rv">May you experience things that change your perspective for the better.</p><p class="rv">May you accomplish things you once thought were impossible.</p><p class="rv">May you become someone you’re proud to be.</p><p class="rv">And most importantly, may you never forget to enjoy the journey while you’re becoming that person.</p><p class="rv">Because life isn’t only about reaching the destination.</p><p class="rv">It’s also about everything that happens along the way.</p><p class="rv">The people you meet.</p><p class="rv">The places you go.</p><p class="rv">The conversations you have.</p><p class="rv">The mistakes you make.</p><p class="rv">The lessons you learn.</p><p class="rv">The random moments.</p><p class="rv">The unexpected opportunities.</p><p class="rv">The laughter.</p><p class="rv">The sadness.</p><p class="rv">The excitement.</p><p class="rv">The calm moments.</p><p class="rv">The chaotic moments.</p><p class="rv">All of it becomes part of your story.</p><p class="rv">And this birthday is just another page in that story.</p><p class="rv">There’s still so much left to write.</p></div>
+    </section>
+
+    <section class="track" id="t10" aria-labelledby="t10h"><h2 id="t10h">Here's to you</h2>
+      <blockquote class="pull rv"><p>So here’s to Jessica Tanji.</p></blockquote>
+      <div class="stanza"><p class="rv">Here’s to another year of life.</p><p class="rv">Another year of memories.</p><p class="rv">Another year of laughter.</p><p class="rv">Another year of growth.</p><p class="rv">Another year of experiences.</p><p class="rv">Another year of being completely yourself.</p><p class="rv">And another year of becoming an even stronger, wiser, happier, and more confident version of yourself.</p><p class="rv">Thank you for being you.</p><p class="rv">Thank you for the memories.</p><p class="rv">Thank you for the laughs.</p></div>
+    </section>
+
+    <section class="track" id="t11" aria-labelledby="t11h"><h2 id="t11h">Thank you</h2>
+      <p class="rv">Thank you for all the little moments that might seem ordinary but are actually the things that make life memorable.</p>
+      <div class="stanza"><p class="rv">And thank you for simply being someone worth celebrating today.</p><p class="rv">I hope your birthday is absolutely amazing.</p><p class="rv">I hope your day is filled with happiness from beginning to end.</p><p class="rv">I hope you smile so much your face gets tired.</p><p class="rv">I hope you laugh until you can’t breathe.</p><p class="rv">I hope your cake is delicious.</p><p class="rv">I hope your presents are great.</p><p class="rv">I hope your photos turn out amazing.</p><p class="rv">I hope your favorite people remember your birthday.</p><p class="rv">I hope you get to do something you genuinely enjoy.</p><p class="rv">And I hope when the day finally ends, you can look back and say:</p><p class="rv">“That was a really good birthday.”</p><p class="rv">So once again...</p><p class="rv">Happy birthday, Jessica Tanji.</p><p class="rv">I genuinely hope this next chapter of your life is one of the best ones yet.</p><p class="rv">Keep being yourself.</p><p class="rv">Keep growing.</p><p class="rv">Keep laughing.</p><p class="rv">Keep making memories.</p><p class="rv">Keep doing the things that make you happy.</p><p class="rv">Don’t let temporary problems convince you that your future won’t be good.</p><p class="rv">Don’t let other people’s opinions decide your worth.</p><p class="rv">Don’t compare your journey to someone else’s.</p><p class="rv">And don’t forget how far you’ve already come.</p></div>
+      <p class="rv">There’s so much waiting for you in the future, and I hope you get to experience more happiness, more laughter, more adventures, more success, and more unforgettable moments than you can imagine right now.</p>
+      <div class="stanza"><p class="rv">Have an absolutely wonderful birthday, Jessica.</p><p class="rv">You deserve a day full of happiness, a year full of good memories, and a future full of amazing possibilities.</p><p class="rv">Once again, happy birthday!!!</p><p class="rv">I hope you enjoy every single moment of your day.</p><p class="rv">And yes, I know this message is ridiculously long.</p><p class="rv">But hey...</p><p class="rv">It’s your birthday.</p><p class="rv">You’re worth the extra words.</p></div>
+    </section>
+
+    <footer class="closing rv">
+      <p class="small">Happy birthday,</p>
+      <span class="name">Jessica Tanji</span>
+      <svg class="heart" aria-hidden="true"><use href="#heart"/></svg>
+      <button class="cta quiet" id="again" type="button">Back to the start</button>
+    </footer>
+  </main>
+</div>
 
 <script>
   (function(){
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var envelope = document.getElementById('envelope');
+    var body = document.body;
+    var sleeve = document.getElementById('sleeve');
     var cta = document.getElementById('cta');
     var landing = document.getElementById('landing');
-    var letter = document.getElementById('letterPage');
+    var reader = document.getElementById('reader');
+    var rail = document.getElementById('rail');
     var title = document.getElementById('letterTitle');
     var music = document.getElementById('bgMusic');
     var toggle = document.getElementById('musicToggle');
-    var progress = document.getElementById('progress');
-    var curEl = document.getElementById('cur');
-    var totEl = document.getElementById('tot');
-    var prev = document.getElementById('prev');
-    var next = document.getElementById('next');
-    var themeColor = document.getElementById('themeColor');
-    var slides = Array.prototype.slice.call(letter.querySelectorAll('.slide'));
-    var current = 0;
+    var menuBtn = document.getElementById('menuBtn');
+    var railTitle = document.getElementById('railTitle');
+    var links = Array.prototype.slice.call(document.querySelectorAll('.tracks a'));
+    var tracks = Array.prototype.slice.call(document.querySelectorAll('.track'));
     var opened = false;
 
-    totEl.textContent = pad(slides.length);
-    function pad(n){ return (n < 10 ? '0' : '') + n; }
+    function setSpin(){ body.classList.toggle('spin', !music.paused && !music.muted); }
+    music.addEventListener('play', setSpin);
+    music.addEventListener('pause', setSpin);
 
-    function setCurrent(i){
-      current = i;
-      curEl.textContent = pad(i + 1);
-      progress.style.transform = 'scaleX(' + (slides.length > 1 ? i / (slides.length - 1) : 0) + ')';
-      var dark = slides[i].hasAttribute('data-dark');
-      document.body.classList.toggle('dark', dark);
-      themeColor.setAttribute('content', dark ? '#1B1A18' : '#F7F6F3');
-      prev.disabled = i === 0;
-      next.disabled = i === slides.length - 1;
+    function setActive(id){
+      links.forEach(function(a){
+        var on = a.getAttribute('href') === '#' + id;
+        if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
+      });
     }
 
     function observe(){
+      var items = document.querySelectorAll('.rv');
       if (!('IntersectionObserver' in window)) {
-        slides.forEach(function(s){ s.classList.add('seen'); });
+        items.forEach(function(t){ t.classList.add('in'); });
         return;
       }
-      var reveal = new IntersectionObserver(function(entries){
+      var io = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
-          if (e.isIntersecting) { e.target.classList.add('seen'); reveal.unobserve(e.target); }
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
         });
-      }, { threshold: 0.2 });
-      var track = new IntersectionObserver(function(entries){
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+      items.forEach(function(t){ io.observe(t); });
+
+      var pick = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
-          if (e.isIntersecting) setCurrent(slides.indexOf(e.target));
+          if (e.isIntersecting) {
+            setActive(e.target.id);
+            railTitle.textContent = e.target.querySelector('h2').textContent;
+          }
         });
-      }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
-      slides.forEach(function(s){ reveal.observe(s); track.observe(s); });
+      }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+      tracks.forEach(function(t){ pick.observe(t); });
     }
 
-    function go(i){
-      i = Math.max(0, Math.min(slides.length - 1, i));
-      slides[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    }
-
-    function showLetter(){
+    function showReader(){
       landing.classList.add('leaving');
       setTimeout(function(){
         landing.hidden = true;
-        letter.classList.add('shown');
-        document.body.classList.add('reading');
+        body.classList.remove('on-landing');
+        body.classList.add('reading');
+        reader.classList.add('shown');
         window.scrollTo(0, 0);
         requestAnimationFrame(function(){
-          letter.classList.add('visible');
-          setCurrent(0);
+          reader.classList.add('visible');
           observe();
           title.focus({ preventScroll: true });
         });
-      }, reduce ? 0 : 450);
+      }, reduce ? 0 : 500);
     }
 
     function openLetter(){
       if (opened) return;
       opened = true;
-      envelope.classList.add('open');
+      sleeve.classList.add('open');
       cta.setAttribute('aria-disabled', 'true');
       cta.textContent = 'Opening';
       music.volume = 0.6;
       var p = music.play();
       if (p && p.catch) p.catch(function(){ /* blocked: the toggle still works */ });
-      toggle.classList.add('visible');
-      setTimeout(showLetter, reduce ? 150 : 950);
+      setTimeout(showReader, reduce ? 150 : 1100);
     }
 
     cta.addEventListener('click', openLetter);
-    envelope.addEventListener('click', openLetter);
-    prev.addEventListener('click', function(){ go(current - 1); });
-    next.addEventListener('click', function(){ go(current + 1); });
-    document.getElementById('restart').addEventListener('click', function(){ go(0); });
-
-    document.addEventListener('keydown', function(e){
-      if (!opened || e.metaKey || e.ctrlKey || e.altKey) return;
-      var t = e.target && e.target.tagName;
-      if (t === 'BUTTON' && (e.key === ' ' || e.key === 'Enter')) return;
-      var k = e.key;
-      if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown' || (k === ' ' && !e.shiftKey)) { e.preventDefault(); go(current + 1); }
-      else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp' || (k === ' ' && e.shiftKey)) { e.preventDefault(); go(current - 1); }
-      else if (k === 'Home') { e.preventDefault(); go(0); }
-      else if (k === 'End') { e.preventDefault(); go(slides.length - 1); }
-    });
+    sleeve.addEventListener('click', openLetter);
 
     toggle.addEventListener('click', function(){
       music.muted = !music.muted;
@@ -544,6 +496,24 @@
       toggle.classList.toggle('muted', music.muted);
       toggle.setAttribute('aria-pressed', music.muted ? 'true' : 'false');
       toggle.setAttribute('aria-label', music.muted ? 'Unmute music' : 'Mute music');
+      setSpin();
+    });
+
+    menuBtn.addEventListener('click', function(){
+      var open = rail.classList.toggle('menu-open');
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuBtn.setAttribute('aria-label', open ? 'Hide tracks' : 'Show tracks');
+    });
+    links.forEach(function(a){
+      a.addEventListener('click', function(){
+        rail.classList.remove('menu-open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.getElementById('again').addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+      title.focus({ preventScroll: true });
     });
   })();
 </script>
