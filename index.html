@@ -219,6 +219,84 @@
   .closing .name{ display:block; margin:.15em 0 1.75rem; font-family:var(--display); font-weight:700; font-size:clamp(2.6rem,1rem + 5vw,4.5rem); line-height:1; letter-spacing:-.035em; color:var(--sleeve); }
   .closing .heart{ width:28px; height:28px; display:block; margin:0 0 1.75rem; fill:var(--sleeve); }
 
+
+  /* ---------- video-edit text: every word is a clip on a timeline ---------- */
+  .fxs{ position:relative; }
+  .js .fxs.rv{ opacity:1; transform:none; transition:none; }
+  .fxs .w{ display:inline-block; white-space:pre; }
+  .fxs .wi{ display:inline-block; }
+  .js .fxs .wi{ opacity:0; }
+  .fxs.in .wi{
+    animation-duration:var(--dur,.7s);
+    animation-timing-function:var(--ease);
+    animation-fill-mode:both;
+    animation-delay:calc(var(--n) * var(--step,40ms));
+  }
+
+  /* jump cut: hard, one word after another */
+  .fx-cut.in .wi{ animation-name:k-cut; animation-duration:.001s; animation-timing-function:steps(1,end); }
+  @keyframes k-cut{ from{ opacity:0; } to{ opacity:1; } }
+
+  /* slide-up mask, like titles rolling in */
+  .fx-rise .w{ overflow:hidden; padding-bottom:.18em; margin-bottom:-.18em; vertical-align:top; }
+  .fx-rise.in .wi{ animation-name:k-rise; }
+  @keyframes k-rise{ from{ opacity:1; transform:translateY(110%); } to{ opacity:1; transform:none; } }
+
+  /* whip pan from left / right with motion blur */
+  .fx-whipl.in .wi{ animation-name:k-whipl; animation-duration:.55s; }
+  .fx-whipr.in .wi{ animation-name:k-whipr; animation-duration:.55s; }
+  @keyframes k-whipl{ from{ opacity:0; transform:translateX(-1.6em) skewX(-16deg); filter:blur(7px); } to{ opacity:1; transform:none; filter:blur(0); } }
+  @keyframes k-whipr{ from{ opacity:0; transform:translateX(1.6em) skewX(16deg); filter:blur(7px); } to{ opacity:1; transform:none; filter:blur(0); } }
+
+  /* push-in zoom */
+  .fx-zoom.in .wi{ animation-name:k-zoom; animation-duration:.8s; }
+  @keyframes k-zoom{ from{ opacity:0; transform:scale(2.1); filter:blur(9px); } to{ opacity:1; transform:none; filter:blur(0); } }
+
+  /* punch: scale overshoot, like a beat-synced cut */
+  .fx-punch.in .wi{ animation-name:k-punch; animation-duration:.6s; animation-timing-function:cubic-bezier(.3,1.6,.5,1); }
+  @keyframes k-punch{ from{ opacity:0; transform:scale(.55); } to{ opacity:1; transform:none; } }
+
+  /* page flip */
+  .fx-flip.in .wi{ animation-name:k-flip; animation-duration:.7s; transform-origin:50% 100%; }
+  @keyframes k-flip{ from{ opacity:0; transform:perspective(500px) rotateX(-85deg); } to{ opacity:1; transform:perspective(500px) rotateX(0); } }
+
+  /* rack focus */
+  .fx-focus.in .wi{ animation-name:k-focus; animation-duration:1s; }
+  @keyframes k-focus{ from{ opacity:0; filter:blur(14px); transform:scale(1.06); } to{ opacity:1; filter:blur(0); transform:none; } }
+
+  /* glitch: short colour-split stutter, then it settles */
+  .fx-glitch.in .wi{ animation-name:k-glitch; animation-duration:.6s; animation-timing-function:steps(1,end); }
+  @keyframes k-glitch{
+    0%{ opacity:0; }
+    15%{ opacity:1; transform:translateX(-.08em); text-shadow:.05em 0 rgba(29,63,168,.8), -.05em 0 rgba(200,40,70,.6); }
+    30%{ transform:translateX(.07em); text-shadow:-.05em 0 rgba(29,63,168,.8), .05em 0 rgba(200,40,70,.6); }
+    45%{ opacity:.4; transform:none; text-shadow:none; }
+    60%{ opacity:1; transform:translateX(-.03em); text-shadow:.03em 0 rgba(200,40,70,.5); }
+    100%{ opacity:1; transform:none; text-shadow:none; }
+  }
+
+  /* wipe: a cover slides off the line, left to right */
+  .js .fx-wipe .wi{ opacity:1; }
+  .fx-wipe{ overflow:hidden; padding-bottom:.12em; }
+  .fx-wipe::after{ content:""; position:absolute; inset:0; background:var(--column); pointer-events:none; }
+  .fx-wipe.in::after{ animation:k-wipe .9s cubic-bezier(.7,0,.2,1) both; }
+  @keyframes k-wipe{ from{ transform:translateX(0); } to{ transform:translateX(101%); } }
+
+  /* lower-third bar: a colour bar sweeps across and uncovers the line */
+  .fx-bar{ overflow:hidden; padding-bottom:.12em; }
+  .js .fx-bar:not(.in) .wi{ opacity:0; }
+  .fx-bar::after{
+    content:""; position:absolute; inset:0; background:var(--sleeve); transform:translateX(-101%); pointer-events:none;
+  }
+  .fx-bar.in::after{ animation:k-bar .95s cubic-bezier(.7,0,.2,1) both; }
+  .fx-bar.in .wi{ animation:k-bar-text 1ms linear .42s both; }
+  @keyframes k-bar{ 0%{ transform:translateX(-101%); } 48%{ transform:translateX(0); } 52%{ transform:translateX(0); } 100%{ transform:translateX(101%); } }
+  @keyframes k-bar-text{ from{ opacity:0; } to{ opacity:1; } }
+  .pull .fx-bar::after, .pull.fx-bar::after{ background:var(--ink); }
+
+  /* the headline is a cold open */
+  .opener h1.fxs{ overflow:visible; }
+
   /* ---------- small screens ---------- */
   @media (max-width:860px){
     .reader{ grid-template-columns:1fr; }
@@ -248,6 +326,8 @@
     html{ scroll-behavior:auto; }
     .js .landing-copy > *, .js .sleeve-wrap{ animation:none; opacity:1; transform:none; }
     .js .rv{ opacity:1 !important; transform:none !important; transition:none !important; }
+    .js .fxs .wi{ opacity:1 !important; animation:none !important; transform:none !important; filter:none !important; }
+    .fx-wipe::after, .fx-bar::after{ display:none; }
     .spin .disc-mini svg{ animation:none; }
     .landing, .reader, .sleeve, .sleeve-disc, .sleeve-face{ transition:none; }
     .reading .progress{ animation:none; transform:scaleX(0); }
@@ -435,6 +515,51 @@
       });
     }
 
+
+    /* ---- video-edit text: split into words, give each block its own cut ---- */
+    var LINE_FX = ['cut','rise','whipl','whipr','zoom','flip','focus','wipe','bar','punch','cut','rise'];
+    var PARA_FX = ['focus','rise','wipe','whipl','cut','zoom','flip','whipr'];
+    var PULL_FX = ['punch','zoom','bar','glitch','whipl','flip','whipr','focus'];
+    var HEAD_FX = ['whipl','rise','zoom','whipr'];
+    var seed = 7, last = '';
+    function rnd(){ seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; }
+    function pick(pool){
+      var f, g = 0;
+      do { f = pool[Math.floor(rnd() * pool.length)]; g++; } while (f === last && g < 8);
+      last = f; return f;
+    }
+    function split(el, pool, bounded){
+      if (el.classList.contains('fxs') || !el.firstChild || el.children.length) return;
+      var words = el.textContent.split(/(\s+)/);
+      var count = words.filter(function(w){ return w.trim(); }).length;
+      var fx = pick(pool);
+      if (fx === 'bar' && (bounded || count > 16)) fx = 'wipe';
+      var step = Math.max(10, Math.min(fx === 'cut' ? 90 : 55, 800 / count));
+      var frag = document.createDocumentFragment(), n = 0;
+      words.forEach(function(w){
+        if (!w) return;
+        if (!w.trim()) { frag.appendChild(document.createTextNode(w)); return; }
+        var o = document.createElement('span'); o.className = 'w';
+        var i = document.createElement('span'); i.className = 'wi';
+        i.style.setProperty('--n', n++); i.textContent = w;
+        o.appendChild(i); frag.appendChild(o);
+      });
+      el.textContent = ''; el.appendChild(frag);
+      el.classList.add('fxs', 'fx-' + fx);
+      el.style.setProperty('--step', step + 'ms');
+    }
+    function prepare(){
+      document.querySelectorAll('.track > p.rv').forEach(function(p){ split(p, PARA_FX, true); });
+      document.querySelectorAll('.stanza p.rv').forEach(function(p){ split(p, LINE_FX, false); });
+      document.querySelectorAll('.pull').forEach(function(q){
+        q.classList.remove('rv');
+        q.querySelectorAll('p').forEach(function(p){ p.classList.add('rv'); split(p, PULL_FX, false); });
+      });
+      document.querySelectorAll('.track h2').forEach(function(h){ h.classList.add('rv'); split(h, HEAD_FX, false); });
+      split(title, ['zoom','whipl','punch'], false);
+      title.classList.add('rv');
+    }
+
     function observe(){
       var items = document.querySelectorAll('.rv');
       if (!('IntersectionObserver' in window)) {
@@ -466,6 +591,7 @@
         body.classList.remove('on-landing');
         body.classList.add('reading');
         reader.classList.add('shown');
+        prepare();
         window.scrollTo(0, 0);
         requestAnimationFrame(function(){
           reader.classList.add('visible');
