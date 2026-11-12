@@ -120,63 +120,44 @@
 
   /* ---------- reader ---------- */
   .js .reader:not(.shown){ display:none; }
-  .reader{ display:grid; grid-template-columns:var(--rail) minmax(0,1fr); min-height:100dvh; opacity:0; transition:opacity .8s ease; }
+  .reader{ display:block; min-height:100dvh; opacity:0; transition:opacity .8s ease; }
   .reader.visible{ opacity:1; }
 
-  .rail{
-    position:sticky; top:0; height:100dvh; align-self:start;
-    background:var(--sleeve); color:var(--on-sleeve);
-    display:flex; flex-direction:column; gap:1.5rem;
-    padding:clamp(1.5rem,4vh,2.5rem) clamp(1.25rem,2.4vw,2rem);
-    overflow:hidden;
-  }
-  .rail-top{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-  .disc-mini{ width:56px; height:56px; flex:none; }
+  .chrome{ position:fixed; top:.9rem; left:var(--pad); right:var(--pad); z-index:6; display:flex; justify-content:space-between; align-items:center; pointer-events:none; opacity:0; transition:opacity .5s ease; }
+  body.reading .chrome{ opacity:1; }
+  .chrome > *{ pointer-events:auto; }
+  .disc-mini{ width:48px; height:48px; flex:none; filter:drop-shadow(0 0 0 transparent); }
   .disc-mini svg, .sleeve-disc svg{ width:100%; height:100%; display:block; }
   .spin .disc-mini svg{ animation:spin 5s linear infinite; }
   @keyframes spin{ to{ transform:rotate(360deg); } }
 
-  .music-toggle{
-    width:44px; height:44px; border-radius:6px; flex:none;
-    background:transparent; border:1px solid rgba(255,255,255,.35); color:#FFFFFF;
+  .music-toggle, .nav-btn{
+    width:48px; height:48px; border-radius:6px; flex:none;
+    background:#111111; border:1px solid rgba(255,255,255,.22); color:#FFFFFF;
     display:flex; align-items:center; justify-content:center; cursor:pointer;
-    transition:background .2s ease, transform .2s var(--ease);
+    transition:background .2s ease, transform .2s var(--ease), opacity .3s ease;
   }
-  .music-toggle:hover{ background:rgba(255,255,255,.12); }
-  .music-toggle:active{ transform:scale(.96); }
-  .music-toggle svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+  .music-toggle:hover, .nav-btn:hover{ background:#2B2B2B; }
+  .music-toggle:active, .nav-btn:active{ transform:scale(.96); }
+  .nav-btn:disabled{ opacity:.35; cursor:default; }
+  .music-toggle svg, .nav-btn svg{ width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
   .music-toggle .slash{ display:none; }
   .music-toggle.muted .waves{ display:none; }
   .music-toggle.muted .slash{ display:block; }
-
-  .rail-title{ margin:0; font-family:var(--display); font-weight:700; font-size:1.5rem; line-height:1.08; letter-spacing:-.02em; }
-  .rail-sub{ margin:.35rem 0 0; font-family:var(--display); font-size:.9rem; color:var(--on-sleeve-soft); }
-
-  .tracks{ list-style:none; margin:0; padding:0; overflow-y:auto; flex:1; min-height:0; scrollbar-width:thin; scrollbar-color:rgba(255,255,255,.3) transparent; }
-  .tracks li{ border-top:1px solid rgba(255,255,255,.18); }
-  .tracks li:last-child{ border-bottom:1px solid rgba(255,255,255,.18); }
-  .tracks a{
-    display:grid; grid-template-columns:2.2rem 1fr; align-items:baseline; gap:.25rem;
-    padding:.7rem .25rem; min-height:44px;
-    font-family:var(--display); font-size:.98rem; line-height:1.25;
-    color:var(--on-sleeve-soft); text-decoration:none;
-    font-variant-numeric:tabular-nums;
-    transition:color .25s ease, background .25s ease;
-  }
-  .tracks a:hover{ color:#FFFFFF; }
-  .tracks a[aria-current="true"]{ color:#FFFFFF; font-weight:600; background:var(--sleeve-deep); }
-  .tracks a span{ opacity:.7; }
-
-  .menu-btn{ display:none; }
+  .nav{ position:fixed; right:var(--pad); bottom:1.25rem; z-index:6; display:flex; flex-direction:column; gap:.5rem; opacity:0; pointer-events:none; transition:opacity .5s ease; }
+  body.reading .nav{ opacity:1; pointer-events:auto; }
+  :focus-visible.nav-btn, .nav-btn:focus-visible, .music-toggle:focus-visible{ outline-color:#FFFFFF; box-shadow:0 0 0 4px var(--sleeve); }
 
   /* ---------- the column ---------- */
-  .column{ padding:clamp(3rem,9vh,6rem) var(--pad) clamp(5rem,12vh,9rem); }
+  .column{ padding:clamp(3rem,9vh,6rem) var(--pad) clamp(5rem,12vh,9rem); overflow-x:clip; }
+  .reader{ overflow-x:clip; }
   .column > *{ max-width:36rem; }
   .column > .track{ max-width:none; }
   .track > :not(.head):not(.pull){ max-width:36rem; }
+  @media (min-width:900px){ .track > :not(.head):not(.pull), .opener, .closing{ margin-left:10vw; } }
 
   .progress{
-    position:fixed; top:0; left:var(--rail); right:0; height:3px; background:var(--sleeve);
+    position:fixed; top:0; left:0; right:0; height:3px; background:var(--sleeve);
     transform-origin:0 50%; transform:scaleX(0); pointer-events:none; z-index:4; display:none;
   }
   @supports (animation-timeline: scroll()){
@@ -184,7 +165,7 @@
     @keyframes grow{ to{ transform:scaleX(1); } }
   }
 
-  .opener{ margin:0 0 clamp(3rem,8vh,5rem); }
+  .opener{ margin-bottom:clamp(3rem,8vh,5rem); padding-top:3rem; }
   .opener h1{
     margin:0; font-family:var(--display); font-weight:700;
     font-size:clamp(2.6rem,1rem + 4.6vw,5rem); line-height:1; letter-spacing:-.035em; text-wrap:balance; color:var(--sleeve);
@@ -193,7 +174,7 @@
   .opener p{ margin:1.25rem 0 0; font-family:var(--display); color:var(--muted); font-size:1rem; }
   kbd{ font-family:var(--display); font-size:.8rem; padding:.1rem .4rem; border:1px solid var(--line); border-radius:4px; background:#FFFFFF; }
 
-  .track{ margin:0 0 clamp(3rem,8vh,5.5rem); scroll-margin-top:2rem; }
+  .track{ margin-bottom:clamp(3rem,8vh,5.5rem); scroll-margin-top:2rem; }
   .head{
     position:relative; overflow:hidden;
     margin:0 calc(-1 * var(--pad)) 2.5rem;
@@ -306,27 +287,10 @@
 
   /* ---------- small screens ---------- */
   @media (max-width:860px){
-    .reader{ grid-template-columns:1fr; }
-    .rail{
-      position:sticky; top:0; z-index:5; height:auto; max-height:100dvh;
-      flex-direction:row; flex-wrap:wrap; align-items:center; gap:.75rem;
-      padding:.65rem 1rem;
-    }
-    .rail-top{ order:1; flex:0 0 auto; gap:.75rem; }
-    .disc-mini{ width:36px; height:36px; }
-    .rail-head{ order:2; flex:1; min-width:0; }
-    .rail-title{ font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .rail-sub{ display:none; }
-    .menu-btn{
-      order:3; display:flex; align-items:center; justify-content:center;
-      width:44px; height:44px; border-radius:6px; border:1px solid rgba(255,255,255,.35);
-      background:transparent; color:#FFFFFF; cursor:pointer;
-    }
-    .menu-btn svg{ width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; }
-    .tracks{ order:4; flex:0 0 100%; display:none; max-height:60dvh; }
-    .rail.menu-open .tracks{ display:block; }
-    .progress{ left:0; top:auto; bottom:0; }
-    .column > *, .column .wide{ max-width:none; }
+    .column > *{ max-width:none; }
+    .disc-mini{ width:40px; height:40px; }
+    .music-toggle, .nav-btn{ width:44px; height:44px; }
+    .head h2{ max-width:none; }
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -383,42 +347,26 @@
 </section>
 
 <div class="reader" id="reader">
-  <aside class="rail" id="rail">
-    <div class="rail-top">
-      <div class="disc-mini" aria-hidden="true"><svg><use href="#disc"/></svg></div>
-      <button class="music-toggle" id="musicToggle" type="button" aria-label="Mute music" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>
-          <path class="waves" d="M15.5 9a4 4 0 0 1 0 6"/>
-          <path class="waves" d="M18 6.5a8 8 0 0 1 0 11"/>
-          <path class="slash" d="M15 9.5l5 5M20 9.5l-5 5"/>
-        </svg>
-      </button>
-    </div>
-    <div class="rail-head">
-      <p class="rail-title" id="railTitle">For Jessica Tanji</p>
-      <p class="rail-sub">A birthday letter, in <span id="trackCount">11</span> tracks</p>
-    </div>
-    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="tracks" aria-label="Show tracks"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14M5 12h14M5 16h14"/></svg></button>
-    <ol class="tracks" id="tracks" aria-label="Chapters">
-      <li><a href="#t1"><span>01</span>Ridiculously long</a></li>
-      <li><a href="#t2"><span>02</span>You're Jessica</a></li>
-      <li><a href="#t3"><span>03</span>Mistakes happen</a></li>
-      <li><a href="#t4"><span>04</span>Go easy on yourself</a></li>
-      <li><a href="#t5"><span>05</span>Ordinary days</a></li>
-      <li><a href="#t6"><span>06</span>Good people</a></li>
-      <li><a href="#t7"><span>07</span>Little moments</a></li>
-      <li><a href="#t8"><span>08</span>You matter</a></li>
-      <li><a href="#t9"><span>09</span>Wishes</a></li>
-      <li><a href="#t10"><span>10</span>Here's to you</a></li>
-      <li><a href="#t11"><span>11</span>Thank you</a></li>
-    </ol>
-  </aside>
+  <div class="chrome">
+    <div class="disc-mini" aria-hidden="true"><svg><use href="#disc"/></svg></div>
+    <button class="music-toggle" id="musicToggle" type="button" aria-label="Mute music" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z"/>
+        <path class="waves" d="M15.5 9a4 4 0 0 1 0 6"/>
+        <path class="waves" d="M18 6.5a8 8 0 0 1 0 11"/>
+        <path class="slash" d="M15 9.5l5 5M20 9.5l-5 5"/>
+      </svg>
+    </button>
+  </div>
+  <div class="nav">
+    <button class="nav-btn" id="prev" type="button" aria-label="Scroll up"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
+    <button class="nav-btn" id="next" type="button" aria-label="Scroll down"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10l6 6 6-6"/></svg></button>
+  </div>
 
   <main class="column" id="column">
     <header class="opener">
       <h1 id="letterTitle" tabindex="-1">Happy birthday, Jessica Tanji!</h1>
-      <p>Take your time. Use the tracks on the side to jump around, or just keep scrolling.</p>
+      <p>Take your time. Use the arrow buttons, or just keep scrolling.</p>
     </header>
 
     <section class="track" id="t1" aria-labelledby="t1h"><div class="head"><span class="num" aria-hidden="true">01</span><h2 id="t1h">Ridiculously long</h2></div>
@@ -503,38 +451,18 @@
     var cta = document.getElementById('cta');
     var landing = document.getElementById('landing');
     var reader = document.getElementById('reader');
-    var rail = document.getElementById('rail');
     var title = document.getElementById('letterTitle');
     var music = document.getElementById('bgMusic');
     var toggle = document.getElementById('musicToggle');
-    var menuBtn = document.getElementById('menuBtn');
-    var railTitle = document.getElementById('railTitle');
-    var links = Array.prototype.slice.call(document.querySelectorAll('.tracks a'));
-    var tracks = Array.prototype.slice.call(document.querySelectorAll('.track'));
+    var prevBtn = document.getElementById('prev');
+    var nextBtn = document.getElementById('next');
     var opened = false;
-    var lenis = null;
-    function initLenis(){
-      if (reduce || !window.Lenis || lenis) return;
-      lenis = new window.Lenis({ lerp: 0.085, wheelMultiplier: 0.95 });
-      (function raf(time){ lenis.raf(time); requestAnimationFrame(raf); })(0);
+    function scrollToY(y, immediate){
+      window.scrollTo({ top: y, behavior: reduce || immediate ? 'auto' : 'smooth' });
     }
-    function scrollToY(target, immediate){
-      if (lenis) { lenis.scrollTo(target, { immediate: !!immediate, offset: 0, duration: 1.4 }); }
-      else if (target && target.scrollIntoView) { target.scrollIntoView({ behavior: reduce || immediate ? 'auto' : 'smooth' }); }
-      else { window.scrollTo({ top: target || 0, behavior: reduce || immediate ? 'auto' : 'smooth' }); }
-    }
-
     function setSpin(){ body.classList.toggle('spin', !music.paused && !music.muted); }
     music.addEventListener('play', setSpin);
     music.addEventListener('pause', setSpin);
-
-    function setActive(id){
-      links.forEach(function(a){
-        var on = a.getAttribute('href') === '#' + id;
-        if (on) { a.setAttribute('aria-current', 'true'); } else { a.removeAttribute('aria-current'); }
-      });
-    }
-
 
     /* ---- phrase motion: split into phrases, give each its own cut ---- */
     var LINE_FX = ['up','down','left','right','zoom','shrink','flip','swing','tilt','stretch','pop','drop','cut','wipe','slate'];
@@ -601,15 +529,6 @@
       }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
       items.forEach(function(t){ io.observe(t); });
 
-      var pick = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if (e.isIntersecting) {
-            setActive(e.target.id);
-            railTitle.textContent = e.target.querySelector('h2').textContent;
-          }
-        });
-      }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
-      tracks.forEach(function(t){ pick.observe(t); });
     }
 
     function showReader(){
@@ -620,10 +539,10 @@
         body.classList.add('reading');
         reader.classList.add('shown');
         prepare();
-        scrollToY(0, true); window.scrollTo(0, 0);
+        scrollToY(0, true);
         requestAnimationFrame(function(){
           reader.classList.add('visible');
-          observe();
+          observe(); edges();
           title.focus({ preventScroll: true });
         });
       }, reduce ? 0 : 500);
@@ -635,7 +554,6 @@
       sleeve.classList.add('open');
       cta.setAttribute('aria-disabled', 'true');
       cta.textContent = 'Opening';
-      initLenis();
       music.volume = 0.6;
       var p = music.play();
       if (p && p.catch) p.catch(function(){ /* blocked: the toggle still works */ });
@@ -654,19 +572,18 @@
       setSpin();
     });
 
-    menuBtn.addEventListener('click', function(){
-      var open = rail.classList.toggle('menu-open');
-      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      menuBtn.setAttribute('aria-label', open ? 'Hide tracks' : 'Show tracks');
-    });
-    links.forEach(function(a){
-      a.addEventListener('click', function(e){
-        var target = document.querySelector(a.getAttribute('href'));
-        if (target && lenis) { e.preventDefault(); lenis.scrollTo(target, { duration: 1.6 }); }
-        rail.classList.remove('menu-open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
+    function step(dir){ scrollToY(window.pageYOffset + dir * window.innerHeight * 0.8, false); }
+    prevBtn.addEventListener('click', function(){ step(-1); });
+    nextBtn.addEventListener('click', function(){ step(1); });
+    var ticking = false;
+    function edges(){
+      ticking = false;
+      var y = window.pageYOffset, max = document.documentElement.scrollHeight - window.innerHeight;
+      prevBtn.disabled = y < 8;
+      nextBtn.disabled = y > max - 8;
+    }
+    window.addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(edges); } }, { passive: true });
+    window.addEventListener('resize', edges);
 
     document.getElementById('again').addEventListener('click', function(){
       scrollToY(0, false);
