@@ -11,7 +11,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');if(window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()'))document.documentElement.classList.add('sd');</script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js" defer></script>
 <style>
   :root{
     --sleeve:#1D3FA8;
@@ -31,10 +30,6 @@
     --rail:clamp(19rem,27vw,25rem);
     --pad:clamp(1.25rem,5vw,5rem);
   }
-
-  html.lenis, html.lenis body{ height:auto; }
-  .lenis.lenis-smooth{ scroll-behavior:auto !important; }
-  .lenis.lenis-stopped{ overflow:hidden; }
 
   *{ box-sizing:border-box; }
   [hidden]{ display:none !important; }
@@ -254,131 +249,58 @@
   .closing .heart{ width:28px; height:28px; display:block; margin:0 0 1.75rem; fill:var(--sleeve); }
 
 
-  /* ---------- video-edit text: every word is a clip on a timeline ---------- */
+  /* ---------- phrase motion: each phrase is a clip with its own cut ---------- */
   .fxs{ position:relative; }
   .js .fxs.rv{ opacity:1; transform:none; transition:none; }
-  .fxs .w{ display:inline-block; white-space:pre; }
-  .fxs .wi{ display:inline-block; }
-  .js .fxs .wi{ opacity:0; }
-  .fxs.in .wi{
-    animation-duration:var(--dur,.7s);
-    animation-timing-function:var(--ease);
-    animation-fill-mode:both;
-    animation-delay:calc(var(--n) * var(--step,40ms));
+  .ph{ display:inline-block; vertical-align:baseline; position:relative; }
+  .js .ph{
+    opacity:0;
+    transition:opacity var(--d,.75s) var(--ease), transform var(--d,.75s) var(--ease);
+    transition-delay:calc(var(--p,0) * 120ms);
   }
+  .js .fxs.in .ph{ opacity:1; transform:none; }
 
-  /* jump cut: hard, one word after another */
-  .fx-cut.in .wi{ animation-name:k-cut; animation-duration:.001s; animation-timing-function:steps(1,end); }
-  @keyframes k-cut{ from{ opacity:0; } to{ opacity:1; } }
+  .js .ph.f-up{ transform:translateY(.8em); }
+  .js .ph.f-down{ transform:translateY(-.8em); }
+  .js .ph.f-left{ transform:translateX(-1.1em) skewX(-9deg); }
+  .js .ph.f-right{ transform:translateX(1.1em) skewX(9deg); }
+  .js .ph.f-zoom{ transform:scale(1.4); --d:.9s; }
+  .js .ph.f-shrink{ transform:scale(.72); }
+  .js .ph.f-flip{ transform:perspective(600px) rotateX(-75deg); transform-origin:50% 100%; }
+  .js .ph.f-swing{ transform:perspective(600px) rotateY(60deg); transform-origin:0 50%; }
+  .js .ph.f-tilt{ transform:rotate(-4deg) translateY(.5em); transform-origin:0 100%; }
+  .js .ph.f-stretch{ transform:scaleX(1.55); transform-origin:0 50%; --d:.8s; }
+  .js .ph.f-pop{ transform:scale(.5); transition-timing-function:cubic-bezier(.3,1.6,.5,1); --d:.6s; }
+  .js .ph.f-drop{ transform:translateY(-1.1em); transition-timing-function:cubic-bezier(.34,1.56,.64,1); --d:.7s; }
+  .js .ph.f-cut{ transition:none; }
+  .js .fxs.in .ph.f-cut{ transition:opacity 1ms linear; transition-delay:calc(var(--p,0) * 160ms); }
 
-  /* slide-up mask, like titles rolling in */
-  .fx-rise .w{ overflow:hidden; padding-bottom:.18em; margin-bottom:-.18em; vertical-align:top; }
-  .fx-rise.in .wi{ animation-name:k-rise; }
-  @keyframes k-rise{ from{ opacity:1; transform:translateY(110%); } to{ opacity:1; transform:none; } }
-
-  /* whip pan from left / right with motion blur */
-  .fx-whipl.in .wi{ animation-name:k-whipl; animation-duration:.55s; }
-  .fx-whipr.in .wi{ animation-name:k-whipr; animation-duration:.55s; }
-  @keyframes k-whipl{ from{ opacity:0; transform:translateX(-1.6em) skewX(-16deg); filter:blur(7px); } to{ opacity:1; transform:none; filter:blur(0); } }
-  @keyframes k-whipr{ from{ opacity:0; transform:translateX(1.6em) skewX(16deg); filter:blur(7px); } to{ opacity:1; transform:none; filter:blur(0); } }
-
-  /* push-in zoom */
-  .fx-zoom.in .wi{ animation-name:k-zoom; animation-duration:.8s; }
-  @keyframes k-zoom{ from{ opacity:0; transform:scale(2.1); filter:blur(9px); } to{ opacity:1; transform:none; filter:blur(0); } }
-
-  /* punch: scale overshoot, like a beat-synced cut */
-  .fx-punch.in .wi{ animation-name:k-punch; animation-duration:.6s; animation-timing-function:cubic-bezier(.3,1.6,.5,1); }
-  @keyframes k-punch{ from{ opacity:0; transform:scale(.55); } to{ opacity:1; transform:none; } }
-
-  /* page flip */
-  .fx-flip.in .wi{ animation-name:k-flip; animation-duration:.7s; transform-origin:50% 100%; }
-  @keyframes k-flip{ from{ opacity:0; transform:perspective(500px) rotateX(-85deg); } to{ opacity:1; transform:perspective(500px) rotateX(0); } }
-
-  /* rack focus */
-  .fx-focus.in .wi{ animation-name:k-focus; animation-duration:1s; }
-  @keyframes k-focus{ from{ opacity:0; filter:blur(14px); transform:scale(1.06); } to{ opacity:1; filter:blur(0); transform:none; } }
-
-  /* glitch: short colour-split stutter, then it settles */
-  .fx-glitch.in .wi{ animation-name:k-glitch; animation-duration:.6s; animation-timing-function:steps(1,end); }
-  @keyframes k-glitch{
-    0%{ opacity:0; }
-    15%{ opacity:1; transform:translateX(-.08em); text-shadow:.05em 0 rgba(29,63,168,.8), -.05em 0 rgba(200,40,70,.6); }
-    30%{ transform:translateX(.07em); text-shadow:-.05em 0 rgba(29,63,168,.8), .05em 0 rgba(200,40,70,.6); }
-    45%{ opacity:.4; transform:none; text-shadow:none; }
-    60%{ opacity:1; transform:translateX(-.03em); text-shadow:.03em 0 rgba(200,40,70,.5); }
-    100%{ opacity:1; transform:none; text-shadow:none; }
+  /* covers slide off the phrase: wipe uses the page colour, slate uses the sleeve colour */
+  .js .ph.f-wipe, .js .ph.f-slate{ opacity:1; transition:none; overflow:hidden; padding-bottom:.12em; margin-bottom:-.12em; }
+  .ph.f-wipe::after, .ph.f-slate::after{ content:""; position:absolute; inset:0; pointer-events:none; }
+  .ph.f-wipe::after{ background:var(--column); }
+  .ph.f-slate::after{ background:var(--sleeve); }
+  .pull .ph.f-wipe::after{ background:var(--sleeve); }
+  .pull .ph.f-slate::after{ background:#FFFFFF; }
+  .fxs.in .ph.f-wipe::after, .fxs.in .ph.f-slate::after{
+    animation:k-cover .85s cubic-bezier(.7,0,.2,1) both;
+    animation-delay:calc(var(--p,0) * 120ms);
   }
+  @keyframes k-cover{ from{ transform:translateX(0); } to{ transform:translateX(101%); } }
 
-  /* wipe: a cover slides off the line, left to right */
-  .js .fx-wipe .wi{ opacity:1; }
-  .fx-wipe{ overflow:hidden; padding-bottom:.12em; }
-  .fx-wipe::after{ content:""; position:absolute; inset:0; background:var(--column); pointer-events:none; }
-  .fx-wipe.in::after{ animation:k-wipe .9s cubic-bezier(.7,0,.2,1) both; }
-  @keyframes k-wipe{ from{ transform:translateX(0); } to{ transform:translateX(101%); } }
-
-  /* lower-third bar: a colour bar sweeps across and uncovers the line */
-  .fx-bar{ overflow:hidden; padding-bottom:.12em; }
-  .js .fx-bar:not(.in) .wi{ opacity:0; }
-  .fx-bar::after{
-    content:""; position:absolute; inset:0; background:var(--sleeve); transform:translateX(-101%); pointer-events:none;
-  }
-  .fx-bar.in::after{ animation:k-bar .95s cubic-bezier(.7,0,.2,1) both; }
-  .fx-bar.in .wi{ animation:k-bar-text 1ms linear .42s both; }
-  @keyframes k-bar{ 0%{ transform:translateX(-101%); } 48%{ transform:translateX(0); } 52%{ transform:translateX(0); } 100%{ transform:translateX(101%); } }
-  @keyframes k-bar-text{ from{ opacity:0; } to{ opacity:1; } }
-  .pull .fx-bar::after, .pull.fx-bar::after{ background:var(--ink); }
-
-  /* the headline is a cold open */
-  .opener h1.fxs{ overflow:visible; }
-
-
-  /* ---------- scroll-scrubbed motion (the timeline is your scrollbar) ---------- */
-  @keyframes k-head{ from{ clip-path:inset(16% 9% 16% 9% round 14px); } to{ clip-path:inset(0 0 0 0 round 0); } }
+  /* ---------- scroll-scrubbed pieces (few elements, transform only) ---------- */
+  @keyframes k-head{ from{ transform:scale(.93); } to{ transform:none; } }
   @keyframes k-num{ from{ transform:translateY(40%); } to{ transform:translateY(-30%); } }
   @keyframes k-rot{ to{ transform:rotate(1440deg); } }
-  @keyframes k-push{ from{ transform:scale(1); } to{ transform:scale(1.12); } }
+  @keyframes k-push{ from{ transform:scale(1); } to{ transform:scale(1.1); } }
   @keyframes k-lb{ 0%,100%{ transform:scaleY(0); } 10%,90%{ transform:scaleY(1); } }
 
   html.sd .disc-mini{ animation:k-rot linear both; animation-timeline:scroll(root block); }
-
-  html.sd .head{ animation:k-head cubic-bezier(.2,.7,.2,1) both; animation-timeline:view(); animation-range:entry 0% cover 40%; }
+  html.sd .head{ animation:k-head cubic-bezier(.2,.7,.2,1) both; animation-timeline:view(); animation-range:entry 0% cover 35%; }
   html.sd .head .num{ animation:k-num linear both; animation-timeline:view(); animation-range:cover 0% cover 100%; }
 
-  html.sd .fxs:not(.intro){ view-timeline:--b block; }
-  html.sd .fxs:not(.intro) .wi{
-    opacity:1;
-    animation-delay:0s; animation-duration:auto;
-    animation-fill-mode:both;
-    animation-timing-function:cubic-bezier(.2,.7,.2,1);
-    animation-timeline:--b;
-    animation-range:cover calc(var(--n) * var(--sr,1%)) cover calc(var(--len,22%) + var(--n) * var(--sr,1%));
-  }
-  html.sd .fx-cut:not(.intro) .wi{ animation-name:k-cut; --len:1.6%; animation-timing-function:steps(1,end); }
-  html.sd .fx-rise:not(.intro) .wi{ animation-name:k-rise; }
-  html.sd .fx-whipl:not(.intro) .wi{ animation-name:k-whipl; }
-  html.sd .fx-whipr:not(.intro) .wi{ animation-name:k-whipr; }
-  html.sd .fx-zoom:not(.intro) .wi{ animation-name:k-zoom; }
-  html.sd .fx-punch:not(.intro) .wi{ animation-name:k-punch; animation-timing-function:cubic-bezier(.3,1.6,.5,1); }
-  html.sd .fx-flip:not(.intro) .wi{ animation-name:k-flip; }
-  html.sd .fx-focus:not(.intro) .wi{ animation-name:k-focus; --len:30%; }
-  html.sd .fx-glitch:not(.intro) .wi{ animation-name:k-glitch; animation-timing-function:steps(1,end); --len:14%; }
-  html.sd .fx-wipe:not(.intro) .wi, html.sd .fx-bar:not(.intro) .wi{ animation:none; opacity:1; }
-  html.sd .fx-wipe:not(.intro)::after{ animation:k-wipe linear both; animation-timeline:--b; animation-range:cover 0% cover 26%; }
-  html.sd .fx-bar:not(.intro)::after{ animation:k-bar linear both; animation-timeline:--b; animation-range:cover 0% cover 30%; }
-  html.sd .fx-bar:not(.intro) .wi{ animation:k-bar-text linear both; animation-timeline:--b; animation-range:cover 12% cover 13%; opacity:1; }
-
-  /* pull scenes: tall pinned stage, words scrub on the scene's own timeline */
-  html.sd .pull{ view-timeline:--pl block; min-height:240dvh; }
+  html.sd .pull{ view-timeline:--pl block; min-height:220dvh; }
   html.sd .pull-stage{ position:sticky; top:0; height:100dvh; min-height:0; }
-  html.sd .pull .fxs{ view-timeline:none; }
-  html.sd .pull .fxs:not(.intro) .wi{
-    animation-timeline:--pl;
-    animation-range:cover calc(var(--o,30%) + var(--n) * var(--sr,1%)) cover calc(var(--o,30%) + var(--len,10%) + var(--n) * var(--sr,1%));
-  }
-  html.sd .pull .fx-focus:not(.intro) .wi{ --len:14%; }
-  html.sd .pull .fx-wipe:not(.intro)::after{ animation-timeline:--pl; animation-range:cover var(--o,30%) cover calc(var(--o,30%) + 10%); }
-  html.sd .pull .fx-bar:not(.intro)::after{ animation-timeline:--pl; animation-range:cover var(--o,30%) cover calc(var(--o,30%) + 12%); }
-  html.sd .pull .fx-bar:not(.intro) .wi{ animation-timeline:--pl; animation-range:cover calc(var(--o,30%) + 5%) cover calc(var(--o,30%) + 5.5%); }
   html.sd .pull-text{ animation:k-push linear both; animation-timeline:--pl; animation-range:cover 30% cover 70%; }
   html.sd .lb{ animation:k-lb linear both; animation-timeline:--pl; animation-range:cover 27% cover 73%; }
 
@@ -410,10 +332,8 @@
   @media (prefers-reduced-motion:reduce){
     html{ scroll-behavior:auto; }
     .js .landing-copy > *, .js .sleeve-wrap{ animation:none; opacity:1; transform:none; }
-    .js .rv{ opacity:1 !important; transform:none !important; transition:none !important; }
-    .js .fxs .wi{ opacity:1 !important; animation:none !important; transform:none !important; filter:none !important; }
-    .fx-wipe::after, .fx-bar::after{ display:none; }
-    html.sd .fxs .wi{ animation:none !important; opacity:1 !important; transform:none !important; filter:none !important; }
+    .js .rv, .js .ph{ opacity:1 !important; transform:none !important; transition:none !important; }
+    .ph::after{ display:none; }
     html.sd .head, html.sd .head .num, html.sd .disc-mini, html.sd .pull-text, html.sd .lb{ animation:none !important; }
     html.sd .pull{ min-height:0; }
     html.sd .pull-stage{ position:relative; height:auto; min-height:min(80dvh,44rem); }
@@ -616,56 +536,60 @@
     }
 
 
-    /* ---- video-edit text: split into words, give each block its own cut ---- */
-    var LINE_FX = ['cut','rise','whipl','whipr','zoom','flip','focus','wipe','bar','punch','cut','rise'];
-    var PARA_FX = ['focus','rise','wipe','whipl','cut','zoom','flip','whipr'];
-    var PULL_FX = ['punch','zoom','bar','glitch','whipl','flip','whipr','focus'];
-    var HEAD_FX = ['whipl','rise','zoom','whipr'];
-    var seed = 7, last = '';
+    /* ---- phrase motion: split into phrases, give each its own cut ---- */
+    var LINE_FX = ['up','down','left','right','zoom','shrink','flip','swing','tilt','stretch','pop','drop','cut','wipe','slate'];
+    var PARA_FX = ['up','left','right','tilt','zoom','wipe','down','swing','cut','stretch'];
+    var PULL_FX = ['pop','zoom','slate','left','right','flip','drop','stretch'];
+    var HEAD_FX = ['left','zoom','up','tilt','swing','pop'];
+    var seed = 11, last = '', prev2 = '';
     function rnd(){ seed = (seed * 1664525 + 1013904223) % 4294967296; return seed / 4294967296; }
     function pick(pool){
       var f, g = 0;
-      do { f = pool[Math.floor(rnd() * pool.length)]; g++; } while (f === last && g < 8);
-      last = f; return f;
+      do { f = pool[Math.floor(rnd() * pool.length)]; g++; } while ((f === last || f === prev2) && g < 12);
+      prev2 = last; last = f; return f;
     }
-    function split(el, pool, bounded){
-      if (el.classList.contains('fxs') || !el.firstChild || el.children.length) return;
-      var words = el.textContent.split(/(\s+)/);
-      var count = words.filter(function(w){ return w.trim(); }).length;
-      var fx = pick(pool);
-      if (fx === 'bar' && (bounded || count > 16)) fx = 'wipe';
-      var step = Math.max(10, Math.min(fx === 'cut' ? 90 : 55, 800 / count));
-      var frag = document.createDocumentFragment(), n = 0;
-      words.forEach(function(w){
-        if (!w) return;
-        if (!w.trim()) { frag.appendChild(document.createTextNode(w)); return; }
-        var o = document.createElement('span'); o.className = 'w';
-        var i = document.createElement('span'); i.className = 'wi';
-        i.style.setProperty('--n', n++); i.textContent = w;
-        o.appendChild(i); frag.appendChild(o);
+    function wc(s){ var m = s.trim(); return m ? m.split(/\s+/).length : 0; }
+    function phrases(text){
+      var parts = text.match(/[^,;:.!?\u2014\u2013]+[,;:.!?\u2014\u2013]*\s*/g) || [text];
+      var out = [];
+      parts.forEach(function(s){
+        if (out.length && wc(out[out.length - 1]) < 3) out[out.length - 1] += s; else out.push(s);
+      });
+      if (out.length > 1 && wc(out[out.length - 1]) < 3) { var tail = out.pop(); out[out.length - 1] += tail; }
+      var res = [];
+      out.forEach(function(s){
+        var w = s.trim().split(/\s+/);
+        if (w.length > 10) { var m = Math.ceil(w.length / 2); res.push(w.slice(0, m).join(' ')); res.push(w.slice(m).join(' ')); }
+        else res.push(s.trim());
+      });
+      return res;
+    }
+    function split(el, pool, offset){
+      if (el.classList.contains('fxs') || el.children.length) return;
+      var list = phrases(el.textContent);
+      var frag = document.createDocumentFragment();
+      list.forEach(function(s, i){
+        var o = document.createElement('span');
+        o.className = 'ph f-' + pick(pool);
+        o.style.setProperty('--p', Math.min(i, 6) + (offset || 0));
+        o.textContent = s;
+        frag.appendChild(o);
+        if (i < list.length - 1) frag.appendChild(document.createTextNode(' '));
       });
       el.textContent = ''; el.appendChild(frag);
-      el.classList.add('fxs', 'fx-' + fx);
-      el.style.setProperty('--step', step + 'ms');
-      el.style.setProperty('--sr', Math.min(1.1, 12 / count).toFixed(2) + '%');
+      el.classList.add('fxs');
     }
     function prepare(){
-      document.querySelectorAll('.track > p.rv').forEach(function(p){ split(p, PARA_FX, true); });
-      document.querySelectorAll('.stanza p.rv').forEach(function(p){ split(p, LINE_FX, false); });
+      document.querySelectorAll('.track > p.rv').forEach(function(p){ split(p, PARA_FX, 0); });
+      document.querySelectorAll('.stanza p.rv').forEach(function(p){ split(p, LINE_FX, 0); });
       document.querySelectorAll('.pull').forEach(function(q){
-        q.querySelectorAll('.pull-text p').forEach(function(p, pi){
-          p.classList.add('rv'); split(p, PULL_FX, false);
-          p.style.setProperty('--o', (30 + pi * 9) + '%');
-        });
+        q.querySelectorAll('.pull-text p').forEach(function(p, pi){ p.classList.add('rv'); split(p, PULL_FX, pi * 3); });
       });
-      document.querySelectorAll('.track h2').forEach(function(h){ h.classList.add('rv'); split(h, HEAD_FX, false); });
-      split(title, ['zoom','whipl','punch'], false);
-      title.classList.add('rv', 'intro');
+      document.querySelectorAll('.track h2').forEach(function(h){ h.classList.add('rv'); split(h, HEAD_FX, 0); });
+      title.classList.add('rv'); split(title, ['pop','drop','zoom','up'], 0);
     }
-
     function observe(){
-      var sd = document.documentElement.classList.contains('sd');
-      var items = Array.prototype.filter.call(document.querySelectorAll('.rv'), function(el){ return !(sd && el.classList.contains('fxs') && !el.classList.contains('intro')); });
+      var items = document.querySelectorAll('.rv');
       if (!('IntersectionObserver' in window)) {
         items.forEach(function(t){ t.classList.add('in'); });
         return;
